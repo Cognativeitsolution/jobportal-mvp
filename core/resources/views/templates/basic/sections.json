@@ -1,0 +1,322 @@
+{
+    "banner": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Banner",
+        "content": {
+            "images": {
+                "image_one": {
+                    "size": "100x100"
+                },
+                "image_two": {
+                    "size": "100x100"
+                },
+                "image_three": {
+                    "size": "100x100"
+                },
+                "image_four": {
+                    "size": "100x100"
+                },
+                "image_five": {
+                    "size": "100x100"
+                },
+                "image_six": {
+                    "size": "100x100"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "search_heading": "text"
+        }
+    },
+    "category": {
+        "builder": true,
+        "name": "Category",
+        "content": {
+            "heading": "text"
+        }
+    },
+    "top_hot_job": {
+        "builder": true,
+        "name": "Hot Job",
+        "content": {
+            "heading": "text"
+        }
+    },
+    "about": {
+        "builder": true,
+        "name": "About Us",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "580x465"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "video_link": "text",
+            "button_text": "text",
+            "button_url": "text"
+        },
+        "element": {
+            "title": "text",
+            "modal": true
+        }
+    },
+    "featured_companies": {
+        "builder": true,
+        "name": "Featured Company",
+        "content": {
+            "heading": "text"
+        }
+    },
+    "featured_job": {
+        "builder": true,
+        "name": "Featured Jobs",
+        "content": {
+            "heading": "text"
+        }
+    },
+    "top_companies": {
+        "builder": true,
+        "name": "Top Companies",
+        "content": {
+            "heading": "text"
+        }
+    },
+    "sponsored_companies": {
+        "builder": true,
+        "name": "Sponsored Companies",
+        "content": {
+            "heading": "text"
+        },
+        "element": {
+            "images": {
+                "image": {
+                    "size": "60x60"
+                }
+            },
+            "company_name": "text",
+            "short_description": "textarea",
+            "icon": "icon",
+            "location": "text",
+            "modal": false
+        }
+    },
+    "roles": {
+        "builder": true,
+        "name": "Roles",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "social_icon": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Social Icons",
+        "element": {
+            "social_icon": "icon",
+            "url": "text",
+            "modal": true
+        }
+    },
+    "recruiter": {
+        "builder": true,
+        "name": "Employer",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "400x345"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "button_text": "text",
+            "button_url": "text"
+        }
+    },
+    "login": {
+        "builder": true,
+        "no_selection": true,
+        "name": "User Login",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "1055x945"
+                }
+            },
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "register": {
+        "builder": true,
+        "no_selection": true,
+        "name": "User Register",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "1055x945"
+                }
+            },
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "policy_pages": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Policy Pages",
+        "hide_builder": true,
+        "element": {
+            "title": "text",
+            "slug": "title",
+            "details": "textarea-nic",
+            "modal": false
+        }
+    },
+    "blog": {
+        "builder": true,
+        "name": "Blogs",
+        "content": {
+            "heading": "text"
+        },
+        "element": {
+            "images": {
+                "image": {
+                    "size": "860x600",
+                    "thumb": "430x300"
+                }
+            },
+            "title": "text",
+            "slug": "title",
+            "category": "text",
+            "description_nic": "textarea-nic",
+            "modal": false,
+            "seo": true
+        }
+    },
+    "contact_us": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Contact Us",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "565x415"
+                }
+            },
+            "title": "text",
+            "heading": "text",
+            "subheading": "text",
+            "email": "text",
+            "email_heading": "text",
+            "email_icon": "icon",
+            "email_icon_text": "text",
+            "address": "text",
+            "address_icon": "icon",
+            "address_icon_text": "text",
+            "mobile": "text",
+            "mobile_heading": "text",
+            "mobile_icon": "icon",
+            "mobile_icon_text": "text",
+            "location_url": "text"
+        }
+    },
+    "footer": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Footer",
+        "content": {
+            "description": "textarea"
+        }
+    },
+    "subscribe": {
+        "no_selection": true,
+        "builder": true,
+        "name": "Subscribe",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "button_text": "text"
+        }
+    },
+    "employer_login": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Employer Login",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "1055x945"
+                }
+            },
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "employer_register": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Employer Register",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "1055x945"
+                }
+            },
+            "heading": "text",
+            "subheading": "text"
+        }
+    },
+    "banned": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Banned Section",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "700x400"
+                }
+            },
+            "heading": "text"
+        }
+    },
+    "register_disable": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Registration Disable",
+        "content": {
+            "images": {
+                "image": {
+                    "size": "280x280"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "button_name": "text",
+            "button_url": "text"
+        }
+    },
+    "user_profile_setting": {
+        "builder": true,
+        "no_selection": true,
+        "name": "User Profile Setting",
+        "content": {
+            "headline_message": "text",
+            "skill_message": "text",
+            "employment_message": "text",
+            "education_message": "text",
+            "it_skill_message": "text",
+            "project_message": "text",
+            "profile_summary_message": "text",
+            "online_profile_message": "text",
+            "publication_message": "text",
+            "presentation_message": "text",
+            "patent_message": "text",
+            "certification_message": "text",
+            "language_message": "text"
+        }
+    }
+}
