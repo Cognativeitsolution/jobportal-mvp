@@ -1,6 +1,6 @@
 <?php
 
-namespace Textmagic;
+namespace App\Notify\Textmagic\ClientTests;
 
 require_once('../Services/TextmagicRestClient.php');
 
@@ -8,13 +8,16 @@ use App\Notify\Textmagic\Services\TextmagicRestClient;
 use App\Notify\Textmagic\Services\RestException;
 use App\Notify\Textmagic\Services\HttpClient\HttpCurl;
 
-class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
+class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase
+{
 
-    function getClient($http) {
+    function getClient($http)
+    {
         return new TextmagicRestClient('<USERNAME>', '<APIV2_TOKEN>', 'v2', $http);
     }
 
-    function createMockHttp($method, $url, $params = null, $response, $status = 200) {
+    function createMockHttp($method, $url, $params = null, $response, $status = 200)
+    {
         $http = $this->getMock('HttpCurl', array('authenticate', 'POST', 'PUT', 'DELETE', 'GET'));
 
         if (strtoupper($method) === 'GET') {
@@ -54,10 +57,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         return $http;
     }
 
-    public function testBulk() {
-        $params = array(
-
-        );
+    public function testBulk()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'status' => 'c',
@@ -86,13 +88,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testBulks() {
-        $params = array(
-
-        );
+    public function testBulks()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -125,13 +126,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testChat() {
-        $params = array(
-
-        );
+    public function testChat()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -161,13 +161,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testChats() {
-        $params = array(
-
-        );
+    public function testChats()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -190,13 +189,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveListsList() {
-        $params = array(
-
-        );
+    public function testRetrieveListsList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -219,13 +217,14 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testSearchLists() {
+    public function testSearchLists()
+    {
         $params = array(
             'ids' => 1
         );
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -248,7 +247,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testCreateList() {
+    public function testCreateList()
+    {
         $params = array(
             'name' => 'API TEST'
         );
@@ -267,10 +267,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveList() {
-        $params = array(
-
-        );
+    public function testRetrieveList()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'name' => 'TEST',
@@ -289,7 +288,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testUpdateList() {
+    public function testUpdateList()
+    {
         $params = array(
             'name' => 'API TEST'
         );
@@ -308,7 +308,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testCreateContact() {
+    public function testCreateContact()
+    {
         $params = array(
             'firstName' => 'API TEST',
             'phone' => '1234567890',
@@ -329,7 +330,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testUpdateListContacts() {
+    public function testUpdateListContacts()
+    {
         $params = array(
             'contacts' => 1
         );
@@ -348,7 +350,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testDeleteListContacts() {
+    public function testDeleteListContacts()
+    {
         $params = array(
             'contacts' => 1
         );
@@ -364,13 +367,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testRetrieveListsContacts() {
-        $params = array(
-
-        );
+    public function testRetrieveListsContacts()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -399,13 +401,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveContactsList() {
-        $params = array(
-
-        );
+    public function testRetrieveContactsList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -434,10 +435,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveContact() {
-        $params = array(
-
-        );
+    public function testRetrieveContact()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'firstName' => 'TEST',
@@ -462,7 +462,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testUpdateContact() {
+    public function testUpdateContact()
+    {
         $params = array(
             'firstName' => 'API TEST',
             'phone' => '1234567890',
@@ -483,13 +484,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveCustomFieldsList() {
-        $params = array(
-
-        );
+    public function testRetrieveCustomFieldsList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -510,7 +510,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testCreateCustomField() {
+    public function testCreateCustomField()
+    {
         $params = array(
             'name' => 'API TEST'
         );
@@ -529,10 +530,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveCustomField() {
-        $params = array(
-
-        );
+    public function testRetrieveCustomField()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'name' => 'year',
@@ -545,11 +545,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
             $params,
             $response
         );
-       $result = $this->getClient($http)->customfields->get(1);
-       $this->assertEquals($response, $result);
+        $result = $this->getClient($http)->customfields->get(1);
+        $this->assertEquals($response, $result);
     }
 
-    public function testUpdateCustomField() {
+    public function testUpdateCustomField()
+    {
         $params = array(
             'name' => 'API TEST'
         );
@@ -568,7 +569,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testUpdateCustomFieldContact() {
+    public function testUpdateCustomFieldContact()
+    {
         $params = array(
             'contactId' => 1,
             'value' => 'API TEST VALUE'
@@ -588,10 +590,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testDeleteCustomField() {
-        $params = array(
-
-        );
+    public function testDeleteCustomField()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',
@@ -604,10 +605,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testDeleteContact() {
-        $params = array(
-
-        );
+    public function testDeleteContact()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',
@@ -620,13 +620,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testRetrieveMessagesList() {
-        $params = array(
-
-        );
+    public function testRetrieveMessagesList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -640,7 +639,7 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
                     'lastName' => null,
                     'country' => 'UA',
                     'sender' => '447624800500',
-                    'price'=> 0,
+                    'price' => 0,
                     'partsCount' => 1
                 )
             )
@@ -656,13 +655,14 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testSearchMessages() {
+    public function testSearchMessages()
+    {
         $params = array(
             'ids' => 1
         );
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -676,7 +676,7 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
                     'lastName' => null,
                     'country' => 'GB',
                     'sender' => '447624800500',
-                    'price'=> 0,
+                    'price' => 0,
                     'partsCount' => 1
                 )
             )
@@ -692,7 +692,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testMessagePrice() {
+    public function testMessagePrice()
+    {
         $params = array(
             'text' => 'API TEST',
             'phones' => '1234567890'
@@ -703,7 +704,7 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
             'countries' => array(
                 'IM' => array(
                     'country' => 'IM',
-                    'count'=> 1,
+                    'count' => 1,
                     'max' => 0.049
                 )
             )
@@ -719,7 +720,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testCreateMessage() {
+    public function testCreateMessage()
+    {
         $params = array(
             'text' => 'API TEST',
             'phones' => '1234567890'
@@ -744,13 +746,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveSessionsList() {
-        $params = array(
-
-        );
+    public function testRetrieveSessionsList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -775,10 +776,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveSession() {
-        $params = array(
-
-        );
+    public function testRetrieveSession()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'startTime' => '2014-12-14T04:34:53+0000',
@@ -799,13 +799,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveSessionMessages() {
-        $params = array(
-
-        );
+    public function testRetrieveSessionMessages()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -819,7 +818,7 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
                     'lastName' => null,
                     'country' => 'UA',
                     'sender' => '447624800500',
-                    'price'=> 0,
+                    'price' => 0,
                     'partsCount' => 1
                 )
             )
@@ -835,10 +834,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveMessage() {
-        $params = array(
-
-        );
+    public function testRetrieveMessage()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'receiver' => '1234567890',
@@ -850,7 +848,7 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
             'lastName' => null,
             'country' => 'UA',
             'sender' => '447624800500',
-            'price'=> 0,
+            'price' => 0,
             'partsCount' => 1
         );
 
@@ -864,10 +862,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testDeleteMessage() {
-        $params = array(
-
-        );
+    public function testDeleteMessage()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',
@@ -880,10 +877,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testDeleteSession() {
-        $params = array(
-
-        );
+    public function testDeleteSession()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',
@@ -896,13 +892,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testRetrieveRepliesList() {
-        $params = array(
-
-        );
+    public function testRetrieveRepliesList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -925,13 +920,14 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testSearchReplies() {
+    public function testSearchReplies()
+    {
         $params = array(
             'ids' => 1
         );
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -954,10 +950,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveReply() {
-        $params = array(
-
-        );
+    public function testRetrieveReply()
+    {
+        $params = array();
         $response = array(
             'id' => 5946226,
             'sender' => '3725034224',
@@ -976,10 +971,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testDeleteReply() {
-        $params = array(
-
-        );
+    public function testDeleteReply()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',
@@ -992,13 +986,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testRetrieveSchedulesList() {
-        $params = array(
-
-        );
+    public function testRetrieveSchedulesList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -1028,10 +1021,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveSchedule() {
-        $params = array(
-
-        );
+    public function testRetrieveSchedule()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'nextSend' => '2016-06-10T08:12:08+0000',
@@ -1057,10 +1049,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testDeleteSchedule() {
-        $params = array(
-
-        );
+    public function testDeleteSchedule()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',
@@ -1073,10 +1064,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testUserMessagingStats() {
-        $params = array(
-
-        );
+    public function testUserMessagingStats()
+    {
+        $params = array();
         $response = array(
             array(
                 'replyRate' => 0,
@@ -1103,13 +1093,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testUserSpendingStats() {
-        $params = array(
-
-        );
+    public function testUserSpendingStats()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -1135,13 +1124,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveTemplatesList() {
-        $params = array(
-
-        );
+    public function testRetrieveTemplatesList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -1163,13 +1151,14 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testSearchTemplates() {
+    public function testSearchTemplates()
+    {
         $params = array(
             'name' => 'TEST'
         );
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -1191,7 +1180,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testCreateTemplate() {
+    public function testCreateTemplate()
+    {
         $params = array(
             'name' => 'API TEST',
             'content' => 'API TEST'
@@ -1211,10 +1201,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveTemplate() {
-        $params = array(
-
-        );
+    public function testRetrieveTemplate()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'name' => 'TEST',
@@ -1232,7 +1221,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testUpdateTemplate() {
+    public function testUpdateTemplate()
+    {
         $params = array(
             'name' => 'API TEST',
             'content' => 'API TEST'
@@ -1252,10 +1242,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testDeleteTemplate() {
-        $params = array(
-
-        );
+    public function testDeleteTemplate()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',
@@ -1268,13 +1257,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testRetrieveUnsubscribersList() {
-        $params = array(
-
-        );
+    public function testRetrieveUnsubscribersList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -1297,7 +1285,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testCreateUnsubscriber() {
+    public function testCreateUnsubscriber()
+    {
         $params = array(
             'phone' => '1234567890'
         );
@@ -1316,10 +1305,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveUnsubscriber() {
-        $params = array(
-
-        );
+    public function testRetrieveUnsubscriber()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'phone' => '1234567890',
@@ -1338,10 +1326,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveUser() {
-        $params = array(
-
-        );
+    public function testRetrieveUser()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'username' => 'TEST',
@@ -1372,7 +1359,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testUpdateUser() {
+    public function testUpdateUser()
+    {
         $params = array(
             'firstName' => 'TEST',
             'lastName' => 'TEST',
@@ -1392,7 +1380,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testPingClient() {
+    public function testPingClient()
+    {
         $response = array(
             'ping' => 'pong'
         );
@@ -1408,10 +1397,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveSourcesList() {
-        $params = array(
-
-        );
+    public function testRetrieveSourcesList()
+    {
+        $params = array();
         $response = array(
             'dedicated' => array(
                 '1234567890'
@@ -1434,13 +1422,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveInvoicesList() {
-        $params = array(
-
-        );
+    public function testRetrieveInvoicesList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -1463,13 +1450,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testNumbersList() {
-        $params = array(
-
-        );
+    public function testNumbersList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -1517,7 +1503,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testNumbersAvailable() {
+    public function testNumbersAvailable()
+    {
         $params = array(
             'country' => 'GB'
         );
@@ -1538,7 +1525,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testBuyNumber() {
+    public function testBuyNumber()
+    {
         $params = array(
             'phone' => '1234567890',
             'country' => 'GB',
@@ -1560,10 +1548,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveNumber() {
-        $params = array(
-
-        );
+    public function testRetrieveNumber()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'user' => array(
@@ -1607,10 +1594,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testDeleteNumber() {
-        $params = array(
-
-        );
+    public function testDeleteNumber()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',
@@ -1623,13 +1609,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testSenderIdList() {
-        $params = array(
-
-        );
+    public function testSenderIdList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -1671,7 +1656,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testCreateSenderId() {
+    public function testCreateSenderId()
+    {
         $params = array(
             'senderId' => 'TEST',
             'explanation' => 'TEST'
@@ -1691,10 +1677,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testRetrieveSenderId() {
-        $params = array(
-
-        );
+    public function testRetrieveSenderId()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'user' => array(
@@ -1731,10 +1716,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testDeleteSenderId() {
-        $params = array(
-
-        );
+    public function testDeleteSenderId()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',
@@ -1747,13 +1731,12 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testSubaccountList() {
-        $params = array(
-
-        );
+    public function testSubaccountList()
+    {
+        $params = array();
         $response = array(
             'page' => 1,
-            'limit' =>10,
+            'limit' => 10,
             'pageCount' => 1,
             'resources' => array(
                 array(
@@ -1790,7 +1773,8 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testCreateSubaccount() {
+    public function testCreateSubaccount()
+    {
         $params = array(
             'email' => 'test@test.com',
             'role' => 'A'
@@ -1807,10 +1791,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(true, $result);
     }
 
-    public function testRetrieveSubaccount() {
-        $params = array(
-
-        );
+    public function testRetrieveSubaccount()
+    {
+        $params = array();
         $response = array(
             'id' => 1,
             'username' => 'TEST',
@@ -1843,10 +1826,9 @@ class TextmagicRestClientBulksTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($response, $result);
     }
 
-    public function testDeleteSubaccount() {
-        $params = array(
-
-        );
+    public function testDeleteSubaccount()
+    {
+        $params = array();
 
         $http = $this->createMockHttp(
             'DELETE',

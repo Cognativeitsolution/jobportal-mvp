@@ -7,12 +7,15 @@ use App\Http\Controllers\Controller;
 use App\Models\AdminNotification;
 use App\Models\GatewayCurrency;
 use App\Models\Plan;
+use App\Models\Subscriber;
 use App\Models\Subscription;
 use App\Models\Transaction;
 use Carbon\Carbon;
 
-class PlanController extends Controller {
-    public function index() {
+class PlanController extends Controller
+{
+    public function index()
+    {
         $pageTitle = 'All Plans';
         $plans     = Plan::active()
             ->with(['subscriptions' => function ($subscriptions) {
@@ -26,7 +29,8 @@ class PlanController extends Controller {
         return view('Template::employer.plan.index', compact('pageTitle', 'plans', 'gatewayCurrency'));
     }
 
-    public static function planSubscribe($plan, $employer) {
+    public static function planSubscribe($plan, $employer)
+    {
         $expiredDate = Carbon::now()->addMonth($plan->duration)->format("Y-m-d");
         $employer->balance -= $plan->price;
         $employer->job_post_count      = $plan->job_post;
@@ -44,6 +48,11 @@ class PlanController extends Controller {
         $subscription->status       = Status::SUBSCRIPTION_APPROVED;
         $subscription->expired_date = $expiredDate;
         $subscription->save();
+
+        $subscriber = new Subscriber();
+        $subscriber->email = $employer->email;
+        $subscriber->created_at = Carbon::now();
+        $subscriber->save();
 
         $transaction               = new Transaction();
         $transaction->employer_id  = $employer->id;
