@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AdminNotification;
 use App\Models\GatewayCurrency;
 use App\Models\Plan;
+use App\Models\Subscriber;
 use App\Models\Subscription;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -44,6 +45,11 @@ class PlanController extends Controller {
         $subscription->status       = Status::SUBSCRIPTION_APPROVED;
         $subscription->expired_date = $expiredDate;
         $subscription->save();
+
+        $subscriber = new Subscriber();
+        $subscriber->email = $employer->email;
+        $subscriber->created_at = Carbon::now();
+        $subscriber->save();
 
         $transaction               = new Transaction();
         $transaction->employer_id  = $employer->id;

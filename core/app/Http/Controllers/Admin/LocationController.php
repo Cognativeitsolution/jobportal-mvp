@@ -15,7 +15,7 @@ class LocationController extends Controller {
 
     public function save(Request $request, $id = 0) {
         $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:locations,name,' . $id . ',id',
         ]);
 
         if ($id) {

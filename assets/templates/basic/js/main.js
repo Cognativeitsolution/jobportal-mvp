@@ -276,7 +276,7 @@
       nextArrow: '<button type="button" class="slick-next"> <i class="las la-angle-right"></i> </button>',
       responsive: [
         {
-          breakpoint: 1399,
+          breakpoint: 1440,
           settings: {
             slidesToShow: 3,
           }

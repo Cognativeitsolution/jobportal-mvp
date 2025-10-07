@@ -82,10 +82,17 @@
                                             @lang('Explore by Location')
                                         </a>
                                     </li>
-                                    @foreach ($filterCities ?? [] as $filterCity)
+                                    @php
+                                        $uniqueCities = collect($filterCities ?? [])
+                                            ->map(fn($city) => ucfirst(strtolower(trim($city)))) // normalize case
+                                            ->unique()
+                                            ->values()
+                                            ->all();
+                                    @endphp
+                                    
+                                    @foreach ($uniqueCities as $filterCity)
                                         <li class="mega-menu-list__item">
-                                            <a href="{{ route('company.list.location', $filterCity) }}"
-                                               class="mega-menu-list__link">
+                                            <a href="{{ route('company.list.location', $filterCity) }}" class="mega-menu-list__link">
                                                 {{ __($filterCity) }}
                                             </a>
                                         </li>
