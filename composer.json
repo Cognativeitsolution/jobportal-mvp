@@ -16,7 +16,6 @@
         "google/apiclient": "^2.15",
         "guzzlehttp/guzzle": "^7.8",
         "intervention/image": "^3.6",
-        "laramin/utility": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.6",
