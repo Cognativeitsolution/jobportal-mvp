@@ -14,7 +14,6 @@ use App\Notify\Notify;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Laramin\Utility\VugiChugi;
 
 function systemDetails() {
     $system['name']          = 'joblab';
@@ -164,7 +163,7 @@ function osBrowser() {
 function getTemplates() {
     $param['purchasecode'] = env("PURCHASECODE");
     $param['website']      = @$_SERVER['HTTP_HOST'] . @$_SERVER['REQUEST_URI'] . ' - ' . env("APP_URL");
-    $url                   = VugiChugi::gttmp() . systemDetails()['name'];
+    $url                   = null; 
     $response              = CurlRequest::curlPostContent($url, $param);
     if ($response) {
         return $response;
