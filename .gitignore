@@ -4,7 +4,7 @@ core/vendor.zip
 Files
 *.zip
 *.sql
-assets/admin/push_config.json
+public/assets/admin/push_config.json
 
 /.phpunit.cache
 /node_modules
@@ -25,3 +25,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+.dockerignore
