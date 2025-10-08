@@ -2,19 +2,19 @@
     @php
         $user = auth()->user();
         $eligibility = true;
-        if ($job->gender && $user->gender != $job->gender) {
-            $eligibility = false;
-        }
+        // if ($job->gender && $user->gender != $job->gender) {
+        //     $eligibility = false;
+        // }
 
-        $birthDate = $user->birth_date;
-        $userAge = (int) Carbon\Carbon::parse($user->birth_date)->diffInYears(now());
-        if ($job->min_age > 0 && $job->min_age > $userAge) {
-            $eligibility = false;
-        }
+        // $birthDate = $user->birth_date;
+        // $userAge = (int) Carbon\Carbon::parse($user->birth_date)->diffInYears(now());
+        // if ($job->min_age > 0 && $job->min_age > $userAge) {
+        //     $eligibility = false;
+        // }
 
-        if ($job->max_age > 0 && $job->max_age < $userAge) {
-            $eligibility = false;
-        }
+        // if ($job->max_age > 0 && $job->max_age < $userAge) {
+        //     $eligibility = false;
+        // }
     @endphp
     <div class="modal fade custom--modal fade-in-scale" id="applyModal">
         <div class="modal-dialog">
