@@ -177,24 +177,24 @@ class UserController extends Controller {
         $job  = Job::where('status', Status::JOB_APPROVED)->where('id', $id)->firstOrFail();
 
         $eligibility = true;
-        if ($job->gender && $user->gender != $job->gender) {
-            $eligibility = false;
-        }
+        // if ($job->gender && $user->gender != $job->gender) {
+        //     $eligibility = false;
+        // }
 
-        $birthDate = $user->birth_date;
-        $userAge   = (int) Carbon::parse($user->birth_date)->diffInYears(now());
-        if ($job->min_age > 0 && $job->min_age > $userAge) {
-            $eligibility = false;
-        }
+        // $birthDate = $user->birth_date;
+        // $userAge   = (int) Carbon::parse($user->birth_date)->diffInYears(now());
+        // if ($job->min_age > 0 && $job->min_age > $userAge) {
+        //     $eligibility = false;
+        // }
 
-        if ($job->max_age > 0 && $job->max_age < $userAge) {
-            $eligibility = false;
-        }
+        // if ($job->max_age > 0 && $job->max_age < $userAge) {
+        //     $eligibility = false;
+        // }
 
-        if (!$eligibility) {
-            $notify[] = ['error', 'You are not eligible to apply for this job'];
-            return back()->withNotify($notify);
-        }
+        // if (!$eligibility) {
+        //     $notify[] = ['error', 'You are not eligible to apply for this job'];
+        //     return back()->withNotify($notify);
+        // }
 
         if (jobApply::where('job_id', $job->id)->where('user_id', $user->id)->exists()) {
             $notify[] = ['error', 'You have already applied for this job'];

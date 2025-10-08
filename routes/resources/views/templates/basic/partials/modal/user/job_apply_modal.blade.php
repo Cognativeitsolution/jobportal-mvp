@@ -2,19 +2,19 @@
     @php
         $user = auth()->user();
         $eligibility = true;
-        if ($job->gender && $user->gender != $job->gender) {
-            $eligibility = false;
-        }
+        // if ($job->gender && $user->gender != $job->gender) {
+        //     $eligibility = false;
+        // }
 
-        $birthDate = $user->birth_date;
-        $userAge = (int) Carbon\Carbon::parse($user->birth_date)->diffInYears(now());
-        if ($job->min_age > 0 && $job->min_age > $userAge) {
-            $eligibility = false;
-        }
+        // $birthDate = $user->birth_date;
+        // $userAge = (int) Carbon\Carbon::parse($user->birth_date)->diffInYears(now());
+        // if ($job->min_age > 0 && $job->min_age > $userAge) {
+        //     $eligibility = false;
+        // }
 
-        if ($job->max_age > 0 && $job->max_age < $userAge) {
-            $eligibility = false;
-        }
+        // if ($job->max_age > 0 && $job->max_age < $userAge) {
+        //     $eligibility = false;
+        // }
     @endphp
     <div class="modal fade custom--modal fade-in-scale" id="applyModal">
         <div class="modal-dialog">
@@ -37,13 +37,15 @@
                                 {{ gs('site_name') }} @lang('will not be responsible for any financial transactions or fraud by the company after applying through the website. We only connects companies and job seekers.')
                             </span>
                         </div>
-                        <form action="{{ route('user.job.apply', request()->id) }}" method="POST" class="modal-form disableSubmission">
+                        <form action="{{ route('user.job.apply', request()->id) }}" method="POST"
+                            class="modal-form disableSubmission">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-12 form-group">
                                     <label class="form--label">@lang('Expected Salary')</label>
                                     <div class="input-group">
-                                        <input type="text" class="form--control form-control" name="expected_salary" value="{{ old('expected_salary') }}" required>
+                                        <input type="text" class="form--control form-control" name="expected_salary"
+                                            value="{{ old('expected_salary') }}" required>
                                         <span class="input-group-text">{{ gs('cur_text') }}</span>
                                     </div>
                                 </div>
@@ -66,7 +68,8 @@
                             </span>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn--danger" data-bs-dismiss="modal">@lang('Close')</button>
+                            <button type="button" class="btn btn--danger"
+                                data-bs-dismiss="modal">@lang('Close')</button>
                         </div>
                     @endif
                 </div>
