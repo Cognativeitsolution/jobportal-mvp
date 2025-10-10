@@ -739,6 +739,7 @@
         ],
         "title": "System Setting",
         "icon": "las la-life-ring",
+        "admin": true,
         "route_name": "admin.setting.system",
         "menu_active": [
             "admin.setting.system",
@@ -774,6 +775,7 @@
     "extra": {
         "title": "Extra",
         "icon": "la la-server",
+        "admin": true,
         "menu_active": "admin.system*",
         "counters": [
             "updateAvailable"
