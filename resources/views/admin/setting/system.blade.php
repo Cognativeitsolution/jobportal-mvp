@@ -18,22 +18,37 @@
                 <div class="col-12">
                     <div class="emptyArea"></div>
                 </div>
+
                 @foreach ($settings as $key => $setting)
-                    <div class="col-xxl-4 col-md-6 {{ $key }} searchItems">
-                        @php
-                            $params = null;
-                            if (@$setting->params) {
-                                foreach ($setting->params as $paramVal) {
-                                    $params[] = array_values((array) $paramVal)[0];
-                                }
+                    @php
+                        $params = null;
+                        if (@$setting->params) {
+                            foreach ($setting->params as $paramVal) {
+                                $params[] = array_values((array) $paramVal)[0];
                             }
-                        @endphp
+                        }
+
+                        // Get current user role
+                        $userRole = auth()->user()->role ?? null;
+
+                        // Check if admin access is required and user is not super_admin
+                        $requiresAdmin = isset($setting->admin) && $setting->admin === true;
+                        $isSuperAdmin = $userRole === 'super_admin';
+
+                        // If setting requires admin but user is not super_admin, skip rendering
+                        if ($requiresAdmin && !$isSuperAdmin) {
+                            continue;
+                        }
+                    @endphp
+
+                    <div class="col-xxl-4 col-md-6 {{ $key }} searchItems">
                         <x-widget style="2" link="{{ route($setting->route_name, $params) }}"
                             icon="{{ $setting->icon }}" heading="{{ $setting->title }}"
                             subheading="{{ $setting->subtitle }}" cover_cursor=1 icon_style="fill" color="primary" />
                     </div>
                 @endforeach
             </div>
+
         </div>
     </div>
 @endsection
