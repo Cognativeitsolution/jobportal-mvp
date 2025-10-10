@@ -107,7 +107,7 @@ Route::middleware('admin')->group(function () {
     });
 
     // Subscriber
-    Route::controller('SubscriberController')->prefix('subscriber')->name('subscriber.')->group(function(){
+    Route::controller('SubscriberController')->prefix('subscriber')->name('subscriber.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('send-email', 'sendEmailForm')->name('send.email');
         Route::post('remove/{id}', 'remove')->name('remove');
@@ -447,5 +447,16 @@ Route::middleware('admin')->group(function () {
         Route::get('apply/list/{id}', 'applyList')->name('apply.list');
         Route::post('featured/{id}', 'featured')->name('featured');
         Route::get('applicants/{id}', 'applicants')->name('applicants');
+    });
+
+    // FAQ
+    Route::controller('FaqController')->name('faq.')->prefix('faq')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/show/{id}', 'show')->name('show');
+        Route::post('/status/{id}', 'changeStatus')->name('status');
+        Route::post('/save/{id?}', 'store')->name('save');
+        Route::post('/update/{id}', 'update')->name('update');
+        Route::post('/delete/{id}', 'destroy')->name('delete');
     });
 });
