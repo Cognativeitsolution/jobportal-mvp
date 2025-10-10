@@ -17,7 +17,7 @@
         // }
     @endphp
     <div class="modal fade custom--modal fade-in-scale" id="applyModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered  modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h6 class="modal-title">
@@ -41,10 +41,59 @@
                             @csrf
                             <div class="row">
                                 <div class="col-sm-12 form-group">
-                                    <label class="form--label">@lang('Expected Salary')</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form--control form-control" name="expected_salary" value="{{ old('expected_salary') }}" required>
-                                        <span class="input-group-text">{{ gs('cur_text') }}</span>
+                                    <div class="mb-2">
+                                        <label class="form--label">@lang('Name')</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form--control form-control" name="name"
+                                                value="{{ old('name') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form--label">@lang('Email')</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form--control form-control" name="email"
+                                                value="{{ old('email') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form--label">@lang('Phone')</label>
+                                        <div class="input-group">
+                                            <input type="tel" class="form--control form-control" name="phone"
+                                                value="{{ old('phone') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form--label">@lang('Expected Salary')</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form--control form-control" name="expected_salary"
+                                                value="{{ old('expected_salary') }}" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-2 mt-3">
+                                        <div class="input-group">
+                                            <input type="radio" id="jobOrbitOption" name="resume_options" value="job_orbit"
+                                                required checked>
+                                            <label for="jobOrbitOption"
+                                                class="form--label mb-0 ms-2">@lang('Job Orbit Resume')</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <div class="input-group">
+                                            <input type="radio" id="uploadOption" name="resume_options" value="upload" required>
+                                            <label for="uploadOption"
+                                                class="form--label mb-0 ms-2">@lang('Upload Resume')</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- By default hidden file upload field -->
+                                    <div class="mb-2" id="uploadResumeField" style="display: none;">
+                                        <label class="form--label">@lang('Upload Resume')</label>
+                                        <div class="input-group">
+                                            <input type="file" class="form--control form-control" id="resumeFile"
+                                                name="resumeFile" value="{{ old('resumeFile') }}">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -76,13 +125,44 @@
 
     @push('script')
         <script>
-            (function($) {
+            (function ($) {
                 'use strict';
 
-                $('.applyBtn').on('click', function() {
+                $('.applyBtn').on('click', function () {
                     $('#applyModal').modal('show');
                 })
             })(jQuery)
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const radioButtons = document.querySelectorAll('input[name="resume_options"]');
+                const resumeFieldDiv = document.getElementById('uploadResumeField');
+                const resumeInput = document.getElementById('resumeFile');
+
+                radioButtons.forEach((radio) => {
+                    radio.addEventListener('change', function () {
+                        if (this.value === 'upload') {
+                            resumeFieldDiv.style.display = 'block';
+                            resumeInput.required = true;
+                        } else {
+                            resumeFieldDiv.style.display = 'none';
+                            resumeInput.required = false;
+                            resumeInput.value = ''; // Clear file input
+                        }
+                    });
+                });
+
+                // Initial state on page load
+                const selected = document.querySelector('input[name="resume_options"]:checked');
+                if (selected && selected.value === 'upload') {
+                    resumeFieldDiv.style.display = 'block';
+                    resumeInput.required = true;
+                } else {
+                    resumeFieldDiv.style.display = 'none';
+                    resumeInput.required = false;
+                }
+            });
         </script>
     @endpush
 @endif
