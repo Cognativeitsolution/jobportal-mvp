@@ -739,7 +739,6 @@
         ],
         "title": "System Setting",
         "icon": "las la-life-ring",
-        "admin": true,
         "route_name": "admin.setting.system",
         "menu_active": [
             "admin.setting.system",
