@@ -18,8 +18,10 @@
                     @php echo @$policy->data_values->details @endphp
                 </div>
             </div>
-            <!-- Faqs Section Start -->
-            <div class="faqs_sec">
+        </div>
+        <!-- Faqs Section Start -->
+        <div class="faqs_sec">
+            <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="txt">
@@ -84,8 +86,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Faqs Section Start -->
         </div>
+        <!-- Faqs Section Start -->
     </div>
 @endsection
 
