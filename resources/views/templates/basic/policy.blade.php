@@ -1,7 +1,6 @@
 @extends('Template::layouts.frontend')
 @section('content')
 
-    sty
     <div class="my-120">
         <div class="container">
             <div class="row">
