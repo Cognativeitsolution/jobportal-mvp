@@ -14,15 +14,15 @@
                         <div class="feature-item item-two">
                             <div class="d-flex justify-content-between  align-items-start gap-2">
                                 <a href="{{ route('company.profile', @$recommendedJob->employer->slug) }}"
-                                   class="feature-item__thumb">
+                                    class="feature-item__thumb">
                                     <img src="{{ getImage(getFilePath('employer') . '/' . @$recommendedJob->employer->image, getFileSize('employer')) }}"
-                                         alt="employer-image">
+                                        alt="employer-image">
                                 </a>
                                 <span class="feature-item__time">{{ __(@$recommendedJob->type->name) }}</span>
                             </div>
                             <div class="feature-item__content">
                                 <a href="{{ route('company.profile', @$recommendedJob->employer->slug) }}"
-                                   class="feature-item__name">
+                                    class="feature-item__name">
                                     {{ __(@$recommendedJob->employer->company_name) }}
                                 </a>
                                 <h6 class="feature-item__title m-0">
@@ -52,29 +52,33 @@
                 </div>
                 <div class="sponsor-item-slider dashboardSlider  wow fadeInUp" data-wow-duration="2s">
                     @foreach ($topCompanies as $company)
-                        <div class="sponsor-card">
-                            <div class="sponsor-item">
-                                <a href="{{ route('company.profile', @$company->slug) }}" class="sponsor-item__thumb">
-                                    <img src="{{ getImage(getFilePath('employer') . '/' . @$company->image, getFileSize('employer')) }}" alt="employer-image">
-                                </a>
-                                <div class="sponsor-item__content">
-                                    <h6 class="sponsor-item__title">
-                                        <a href="{{ route('company.profile', $company->slug) }}">
-                                            {{ __($company->company_name) }}
-                                        </a>
-                                    </h6>
-                                    <p class="sponsor-item__location">
-                                        <span class="icon">
-                                            <i class="las la-map-marker"></i>
-                                        </span>
-                                        {{ __($company->city) }}, {{ __($company->country_name) }}
-                                    </p>
-                                    <a href="{{ route('company.jobs', $company->slug) }}" class="btn sponsor-item__btn">
-                                        @lang('View Jobs')
+                        @if (@$company->slug != null)
+                            <div class="sponsor-card">
+                                <div class="sponsor-item">
+                                    <a href="{{ route('company.profile', @$company->slug) }}" class="sponsor-item__thumb">
+                                        <img src="{{ getImage(getFilePath('employer') . '/' . @$company->image, getFileSize('employer')) }}"
+                                            alt="employer-image">
                                     </a>
+                                    <div class="sponsor-item__content">
+                                        <h6 class="sponsor-item__title">
+                                            <a href="{{ route('company.profile', $company->slug) }}">
+                                                {{ __($company->company_name) }}
+                                            </a>
+                                        </h6>
+                                        <p class="sponsor-item__location">
+                                            <span class="icon">
+                                                <i class="las la-map-marker"></i>
+                                            </span>
+                                            {{ __($company->city) }}, {{ __($company->country_name) }}
+                                        </p>
+                                        <a href="{{ route('company.jobs', $company->slug) }}"
+                                            class="btn sponsor-item__btn">
+                                            @lang('View Jobs')
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     @endforeach
                 </div>
             </div>
@@ -93,7 +97,7 @@
                         <div class="blog-item__thumb">
                             <a href="{{ route('blog.details', @$blog->slug) }}" class="blog-item__thumb-link">
                                 <img src="{{ frontendImage('blog', 'thumb_' . @$blog->data_values->image, '400x280') }}"
-                                     class="fit-image" alt="blog-image">
+                                    class="fit-image" alt="blog-image">
                             </a>
                         </div>
                         <div class="blog-item__content">
