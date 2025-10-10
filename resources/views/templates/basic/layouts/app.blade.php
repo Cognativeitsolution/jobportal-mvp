@@ -8,7 +8,7 @@
     <title>{{ gs()->siteName(__($pageTitle)) }}</title>
 
     @include('partials.seo')
-
+<meta name="robots" content="noindex">
     <link href="{{ asset('assets/global/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/global/css/all.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/global/css/line-awesome.min.css') }}" rel="stylesheet" />
