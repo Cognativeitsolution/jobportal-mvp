@@ -2851,6 +2851,14 @@ input[type="number"] {
   .table--responsive--xxl tbody tr:last-child td:last-child {
     border-radius: 0px 0px 5px 5px;
   }
+
+  .table thead tr th {
+    padding: 12px 5px;
+  }
+
+  .table tbody tr td {
+    padding: 15px 5px;
+  }
 }
 
 
@@ -2881,6 +2889,12 @@ input[type="number"] {
   transition: 0.4s;
   font-size: 0.875rem;
   border: 1px solid hsl(var(--black) / 0.08) !important;
+}
+
+@media screen and (max-width: 1299px) {
+    .table.table--responsive--lg {
+        min-width: 1005px;
+    }
 }
 
 @media screen and (max-width: 1199px) {
@@ -11843,6 +11857,10 @@ label.required:after {
   content: "*";
   color: #dc3545 !important;
   margin-left: 2px;
+}
+
+.message-label::after {
+  content: "" !important;
 }
 
 .daterangepicker {
