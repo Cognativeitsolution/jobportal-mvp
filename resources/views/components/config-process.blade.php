@@ -12,7 +12,7 @@
         return $aIndex <=> $bIndex;
     });
 @endphp
-@if ($requiredConfig->completedConfigCount() < $requiredConfig->totalConfigs())
+{{-- @if ($requiredConfig->completedConfigCount() < $requiredConfig->totalConfigs())
 
     <div class="configure-card-wrapper">
         <div class="configure-card">
@@ -91,7 +91,7 @@
                 <circle cx="12" cy="12" r="3" />
             </svg>
         </div>
-    </div>
+    </div> 
 
 
     @push('script-lib')
@@ -268,4 +268,4 @@
         </script>
     @endpush
 
-@endif
+@endif --}}

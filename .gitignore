@@ -3,7 +3,6 @@ core/vendor
 core/vendor.zip
 Files
 *.zip
-*.sql
 public/assets/admin/push_config.json
 
 /.phpunit.cache

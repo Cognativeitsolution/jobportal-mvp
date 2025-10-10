@@ -91,6 +91,19 @@
         "route_name": "admin.plan.index",
         "menu_active": "admin.plan.*"
     },
+    "faq": {
+        "keyword": [
+            "faq",
+            "faqs",
+            "FAQ management",
+            "FAQ list",
+            "FAQ activity"
+        ],
+        "title": "Manage FAQ",
+        "icon": "las la-question-circle",
+        "route_name": "admin.faq.index",
+        "menu_active": "admin.faq.*"
+    },
     "manage_jobs": {
         "title": "Manage Jobs",
         "icon": "las la-clipboard-list",
@@ -774,6 +787,7 @@
     "extra": {
         "title": "Extra",
         "icon": "la la-server",
+        "admin": true,
         "menu_active": "admin.system*",
         "counters": [
             "updateAvailable"
