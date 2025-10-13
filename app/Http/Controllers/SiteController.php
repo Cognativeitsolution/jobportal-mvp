@@ -18,8 +18,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 
-class SiteController extends Controller {
-    public function index() {
+class SiteController extends Controller
+{
+    public function index()
+    {
         $reference = @$_GET['reference'];
         if ($reference) {
             session()->put('reference', $reference);
@@ -34,7 +36,8 @@ class SiteController extends Controller {
         return view('Template::home', compact('pageTitle', 'sections', 'seoContents', 'seoImage', 'cities', 'categories'));
     }
 
-    public function pages($slug) {
+    public function pages($slug)
+    {
         $page        = Page::where('tempname', activeTemplate())->where('slug', $slug)->firstOrFail();
         $pageTitle   = $page->name;
         $sections    = $page->secs;
@@ -43,7 +46,8 @@ class SiteController extends Controller {
         return view('Template::pages', compact('pageTitle', 'sections', 'seoContents', 'seoImage'));
     }
 
-    public function contact() {
+    public function contact()
+    {
         $pageTitle   = "Contact Us";
         $user        = authUser();
         $sections    = Page::where('tempname', activeTemplate())->where('slug', 'contact')->first();
@@ -52,7 +56,8 @@ class SiteController extends Controller {
         return view('Template::contact', compact('pageTitle', 'user', 'sections', 'seoContents', 'seoImage'));
     }
 
-    public function categories() {
+    public function categories()
+    {
         $pageTitle  = 'Categories';
         $categories = Category::active()
             ->withCount([
@@ -65,7 +70,8 @@ class SiteController extends Controller {
         return view('Template::categories', compact('pageTitle', 'categories'));
     }
 
-    public function contactSubmit(Request $request) {
+    public function contactSubmit(Request $request)
+    {
         $request->validate([
             'name'    => 'required',
             'email'   => 'required',
@@ -108,7 +114,8 @@ class SiteController extends Controller {
         return to_route('ticket.view', [$ticket->ticket])->withNotify($notify);
     }
 
-    public function policyPages($slug) {
+    public function policyPages($slug)
+    {
         $policy      = Frontend::where('slug', $slug)->where('data_keys', 'policy_pages.element')->firstOrFail();
         $pageTitle   = $policy->data_values->title;
         $seoContents = $policy->seo_content;
@@ -116,7 +123,8 @@ class SiteController extends Controller {
         return view('Template::policy', compact('policy', 'pageTitle', 'seoContents', 'seoImage'));
     }
 
-    public function changeLanguage($lang = null) {
+    public function changeLanguage($lang = null)
+    {
         $language = Language::where('code', $lang)->first();
         if (!$language) {
             $lang = 'en';
@@ -125,7 +133,8 @@ class SiteController extends Controller {
         return back();
     }
 
-    public function blog() {
+    public function blog()
+    {
         $pageTitle   = "Blog";
         $blogs       = Frontend::where('data_keys', 'blog.element')->orderBy('id', 'desc')->paginate(getPaginate());
         $page        = Page::where('tempname', activeTemplate())->where('slug', 'blog')->firstOrFail();
@@ -134,7 +143,8 @@ class SiteController extends Controller {
         return view('Template::blog', compact('blogs', 'pageTitle', 'page'));
     }
 
-    public function blogDetails($slug) {
+    public function blogDetails($slug)
+    {
         $blog        = Frontend::where('slug', $slug)->where('data_keys', 'blog.element')->firstOrFail();
         $pageTitle   = 'Blog Detail';
         $seoContents = $blog->seo_content;
@@ -143,11 +153,13 @@ class SiteController extends Controller {
         return view('Template::blog_details', compact('blog', 'pageTitle', 'seoContents', 'seoImage', 'recentBlogs'));
     }
 
-    public function cookieAccept() {
+    public function cookieAccept()
+    {
         Cookie::queue('gdpr_cookie', gs('site_name'), 43200);
     }
 
-    public function cookiePolicy() {
+    public function cookiePolicy()
+    {
         $cookieContent = Frontend::where('data_keys', 'cookie.data')->first();
         abort_if($cookieContent->data_values->status != Status::ENABLE, 404);
         $pageTitle = 'Cookie Policy';
@@ -155,7 +167,8 @@ class SiteController extends Controller {
         return view('Template::cookie', compact('pageTitle', 'cookie'));
     }
 
-    public function placeholderImage($size = null) {
+    public function placeholderImage($size = null)
+    {
         $imgWidth  = explode('x', $size)[0];
         $imgHeight = explode('x', $size)[1];
         $text      = $imgWidth . '×' . $imgHeight;
@@ -185,7 +198,8 @@ class SiteController extends Controller {
         imagedestroy($image);
     }
 
-    public function maintenance() {
+    public function maintenance()
+    {
         $pageTitle = 'Maintenance Mode';
         if (gs('maintenance_mode') == Status::DISABLE) {
             return to_route('home');
@@ -194,7 +208,8 @@ class SiteController extends Controller {
         return view('Template::maintenance', compact('pageTitle', 'maintenance'));
     }
 
-    public function contactWithEmployer(Request $request, $id) {
+    public function contactWithEmployer(Request $request, $id)
+    {
         $request->validate([
             'name'    => 'required|max:80',
             'email'   => 'required|email|max:80',
@@ -210,7 +225,8 @@ class SiteController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function addSubscriber(Request $request) {
+    public function addSubscriber(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255|unique:subscribers,email',
         ]);

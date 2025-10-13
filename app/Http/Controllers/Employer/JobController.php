@@ -22,15 +22,18 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class JobController extends Controller {
-    public function index() {
+class JobController extends Controller
+{
+    public function index()
+    {
         $pageTitle = "Jobs List";
         $employer  = authUser('employer');
         $jobs      = Job::where('employer_id', $employer->id)->searchable(['title'])->filter(['status'])->with('category', 'shift', 'type', 'favoriteItems')->withCount('jobApplication as total_apply')->withCount('favoriteItems as total_favorite')->latest()->paginate(getPaginate());
         return view('Template::employer.job.index', compact('employer', 'pageTitle', 'jobs'));
     }
 
-    public function create($step = 0, $slug = null, $jobId = 0) {
+    public function create($step = 0, $slug = null, $jobId = 0)
+    {
         $employer     = authUser('employer');
         $subscription = Subscription::where('employer_id', $employer->id)->approved()->first();
         if ((gs('free_job_post') && $employer->free_job_post_limit > 0) || $subscription || gs('job_post_payment')) {
@@ -61,7 +64,38 @@ class JobController extends Controller {
         }
     }
 
-    public function edit($id) {
+    public function clone($id)
+    {
+        $employer = authUser('employer');
+
+        // Fetch the original job
+        $originalJob = Job::where('id', $id)
+            ->where('employer_id', $employer->id)
+            ->firstOrFail();
+
+        $newJob = $originalJob->replicate();
+
+        // Override fields that must be unique
+        $newJob->slug        = slug($originalJob->title . '-' . time());
+        $newJob->status      = Status::JOB_PENDING;
+        $newJob->created_at  = now();
+        $newJob->updated_at  = now();
+        $newJob->deadline    = now()->addDays(30);
+        $newJob->save();
+
+        $keywordIds = $originalJob->jobKeywords()->pluck('keywords.id')->toArray();
+        if (!empty($keywordIds)) {
+            $newJob->jobKeywords()->sync($keywordIds);
+        }
+
+        $notify[] = ['success', 'Job cloned successfully.'];
+
+        return to_route('employer.job.index', $newJob->id)->withNotify($notify);
+    }
+
+
+    public function edit($id)
+    {
         $employer         = authUser('employer');
         $job              = Job::where('id', $id)->where('employer_id', $employer->id)->firstOrFail();
         $step             = $job->step;
@@ -81,7 +115,8 @@ class JobController extends Controller {
         return view('Template::employer.job.form', compact('job', 'pageTitle', 'cities', 'types', 'shifts', 'skills', 'categories', 'experiences', 'salaryPeriods', 'locations', 'keywords', 'selectedKeywords', 'roles', 'step'));
     }
 
-    public function basic(Request $request, $id = 0, $edit = false) {
+    public function basic(Request $request, $id = 0, $edit = false)
+    {
         $request->validate([
             'title'             => 'required|max:255',
             'category_id'       => 'required|exists:categories,id',
@@ -108,7 +143,6 @@ class JobController extends Controller {
                 $employer->free_job_post_limit -= 1;
                 $employer->save();
                 $notify[] = self::postJobs($job, $employer, isFree: true);
-
             } else if ($subscription || (!$subscription && $employer->balance >= gs('fee_per_job_post') && gs('job_post_payment'))) {
                 $job->amount = gs('fee_per_job_post');
                 if ($subscription) {
@@ -143,7 +177,8 @@ class JobController extends Controller {
         return to_route('employer.job.create', ['step' => Status::JOB_STEP_INFORMATION, 'slug' => $job->slug, 'jobId' => $job->id, 'edit' => $edit]);
     }
 
-    public function information(Request $request, $id, $edit = false) {
+    public function information(Request $request, $id, $edit = false)
+    {
         $request->validate([
             'job_experience_id' => 'required|exists:experiences,id',
             'gender'            => 'required|in:' . Status::ANY_GENDER . ',' . Status::MALE . ',' . Status::FEMALE . ',' . Status::OTHERS . ',' . 0,
@@ -193,7 +228,8 @@ class JobController extends Controller {
         return to_route('employer.job.create', ['step' => Status::JOB_STEP_INFORMATION, 'slug' => $job->slug, 'jobId' => $job->id, 'edit' => $edit]);
     }
 
-    public function details(Request $request, $id, $edit = false) {
+    public function details(Request $request, $id, $edit = false)
+    {
         $request->validate([
             'description'       => 'required|string',
             'short_description' => 'required|string|max:255',
@@ -243,7 +279,8 @@ class JobController extends Controller {
         return to_route('employer.job.index')->withNotify($notify);
     }
 
-    public function store(Request $request, $id = 0) {
+    public function store(Request $request, $id = 0)
+    {
         $this->validation($request);
         $employer = authUser('employer');
 
@@ -281,7 +318,8 @@ class JobController extends Controller {
         return to_route('employer.job.index')->withNotify($notify);
     }
 
-    public static function postJobs($job, $employer, $balance = false, $isFree = false) {
+    public static function postJobs($job, $employer, $balance = false, $isFree = false)
+    {
         $subscription = Subscription::where('employer_id', $employer->id)->whereDate('expired_date', '>', now()->format('Y-m-d'))->approved()->first();
         if ($balance) {
 
@@ -322,19 +360,23 @@ class JobController extends Controller {
         return ['success', $message];
     }
 
-    public function allApplicants($id, $userId = 0) {
+    public function allApplicants($id, $userId = 0)
+    {
         return $this->applicantView($id, userId: $userId);
     }
 
-    public function selectedApplicants($id) {
+    public function selectedApplicants($id)
+    {
         return $this->applicantView($id, 'received');
     }
 
-    public function draftApplicants($id) {
+    public function draftApplicants($id)
+    {
         return $this->applicantView($id, 'draft');
     }
 
-    private function applicantView($id, $scope = null, $userId = 0) {
+    private function applicantView($id, $scope = null, $userId = 0)
+    {
         $pageTitle   = "Applicants List";
         $employer    = authUser('employer');
         $job         = Job::where('employer_id', $employer->id)->findOrFail($id);
@@ -355,7 +397,8 @@ class JobController extends Controller {
         return view('Template::employer.job.applied', compact('pageTitle', 'appliedJobs', 'job', 'data', 'scope', 'userAppliedJob'));
     }
 
-    public function applicationApprove($id) {
+    public function applicationApprove($id)
+    {
         $employer = authUser('employer');
         $jobApply = JobApply::pending()->orWhere('status', Status::JOB_APPLY_DRAFT)->checkEmployerJobs($employer->id)->whereHas('job', function ($query) {
             $query->approved();
@@ -377,7 +420,8 @@ class JobController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function applicationDraft($id) {
+    public function applicationDraft($id)
+    {
         $employer = authUser('employer');
         $jobApply = JobApply::pending()->checkEmployerJobs($employer->id)->whereHas('job', function ($query) {
             $query->approved();
@@ -390,7 +434,8 @@ class JobController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function jobPreview($id) {
+    public function jobPreview($id)
+    {
         $pageTitle = 'Job Preview';
         $employer  = authUser('employer');
         abort_if(!$employer, 404);
@@ -399,7 +444,8 @@ class JobController extends Controller {
         return view('Template::job_details', compact('pageTitle', 'job', 'preview'));
     }
 
-    private function validation($request) {
+    private function validation($request)
+    {
         $request->validate([
             'title'             => 'required|max:255',
             'category_id'       => 'required|exists:categories,id',
@@ -432,7 +478,8 @@ class JobController extends Controller {
         ]);
     }
 
-    public function exportJobApplicant($id, $scope = null) {
+    public function exportJobApplicant($id, $scope = null)
+    {
         $csvData = fopen('php://temp', 'r+');
         fputcsv($csvData, ['Serial', 'Applicant Name', 'Email', 'Mobile', 'Expected Salary']);
         $jobApplications = JobApply::where('job_id', $id);
@@ -456,7 +503,8 @@ class JobController extends Controller {
         }, 'job_applications.csv', ['Content-Type' => 'text/csv']);
     }
 
-    public function applicantDetails($id, $applicationId) {
+    public function applicantDetails($id, $applicationId)
+    {
         $user = User::where('id', $id)->first();
         if (!$user) {
             return response()->json(['error' => 'User not found']);

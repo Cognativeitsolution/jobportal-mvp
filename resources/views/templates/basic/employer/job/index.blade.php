@@ -20,7 +20,7 @@
                         </select>
                         <div class="input-group">
                             <input type="text" name="search" value="{{ request('search') }}"
-                                   placeholder="Search by job title" class="form--control form-control">
+                                placeholder="Search by job title" class="form--control form-control">
                             <button class="input-group-text"><i class="las la-search"></i></button>
                         </div>
                     </form>
@@ -81,28 +81,33 @@
                                             <div class="action-buttons">
                                                 @if (in_array($job->status, [Status::JOB_PENDING, Status::JOB_INCOMPLETE]))
                                                     <a href="{{ route('employer.job.edit', $job->id) }}" class="action-btn"
-                                                       data-bs-toggle="tooltip" data-bs-placement="top"
-                                                       data-bs-title="@lang('Edit')">
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        data-bs-title="@lang('Edit')">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                 @endif
                                                 @if ($job->status == Status::JOB_REJECTED && $job->reject_reason)
                                                     <button class="action-btn rejectBtn" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" data-bs-title="@lang('Reject Reason')"
-                                                            data-reason="{{ __($job->reject_reason) }}">
+                                                        data-bs-placement="top" data-bs-title="@lang('Reject Reason')"
+                                                        data-reason="{{ __($job->reject_reason) }}">
                                                         <i class="fas fa-ban"></i>
                                                     </button>
                                                 @endif
                                                 @if ($job->status == Status::JOB_APPROVED || $job->status == Status::JOB_EXPIRED)
                                                     <a href="{{ route('employer.job.applicants.all', $job->id) }}"
-                                                       class="action-btn" data-bs-toggle="tooltip" data-bs-placement="top"
-                                                       data-bs-title="@lang('Applicants')">
+                                                        class="action-btn" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        data-bs-title="@lang('Applicants')">
                                                         <i class="fas fa-users"></i>
                                                     </a>
                                                 @endif
+                                                <a href="{{ route('employer.job.clone', $job->id) }}" class="action-btn"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-title="@lang('Clone Job')" target="_blank">
+                                                    <i class="fa-regular fa-copy"></i>
+                                                </a>
                                                 <a href="{{ route('employer.job.preview', $job->id) }}" class="action-btn"
-                                                   data-bs-toggle="tooltip" data-bs-placement="top"
-                                                   data-bs-title="@lang('Job Preview')" target="_blank">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-title="@lang('Job Preview')" target="_blank">
                                                     <i class="fa-regular fa-eye"></i>
                                                 </a>
                                             </div>
