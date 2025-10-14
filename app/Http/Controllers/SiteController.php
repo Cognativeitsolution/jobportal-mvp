@@ -116,7 +116,7 @@ class SiteController extends Controller
 
     public function policyPages($slug)
     {
-        $policy      = Frontend::where('slug', $slug)->where('data_keys', 'policy_pages.element')->firstOrFail();
+        $policy      = Frontend::where('slug', $slug)->where('data_keys', 'policy_pages.element')->with('faqs')->firstOrFail();
         $pageTitle   = $policy->data_values->title;
         $seoContents = $policy->seo_content;
         $seoImage    = @$seoContents->image ? frontendImage('policy_pages', $seoContents->image, getFileSize('seo'), true) : null;
