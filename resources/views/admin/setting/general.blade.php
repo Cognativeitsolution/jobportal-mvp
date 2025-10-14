@@ -33,7 +33,8 @@
                                     <label class="required"> @lang('Timezone')</label>
                                     <select class="select2 form-control" name="timezone">
                                         @foreach ($timezones as $key => $timezone)
-                                            <option value="{{ @$key }}" @selected(@$key == $currentTimezone)>{{ __($timezone) }}
+                                            <option value="{{ @$key }}" @selected(@$key == $currentTimezone)>
+                                                {{ __($timezone) }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -97,6 +98,15 @@
                                     </label>
                                     <input class="form-control" type="text" name="free_job_post_limit"
                                         value="{{ gs('free_job_post_limit') }}">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-sm-6">
+                                <div class="form-group">
+                                    <label>
+                                        @lang('Featured Job Post Limit')
+                                    </label>
+                                    <input class="form-control" type="text" name="featured_job_post_limit"
+                                        value="{{ gs('featured_job_post_limit') }}">
                                 </div>
                             </div>
                         </div>

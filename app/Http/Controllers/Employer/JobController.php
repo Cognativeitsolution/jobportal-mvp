@@ -6,6 +6,7 @@ use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Experience;
+use App\Models\GeneralSetting;
 use App\Models\Job;
 use App\Models\JobApply;
 use App\Models\JobKeyword;
@@ -515,5 +516,36 @@ class JobController extends Controller
         }
         $view = view('Template::partials.applicant_profile', compact('user', 'userAppliedJob'))->render();
         return response()->json(['view' => $view]);
+    }
+
+    public function featured($id)
+    {
+        $job = Job::findOrFail($id);
+
+        $featuredJobLimit = GeneralSetting::first()->featured_job_post_limit;
+
+        // Count how many jobs this employer has already featured
+        $employerFeaturedCount = Job::where('employer_id', $job->employer_id)
+            ->where('featured', Status::YES)
+            ->count();
+
+        if ($job->featured) {
+            $job->featured = Status::NO;
+            $job->save();
+
+            $notify[] = ['success', 'Job UnFeatured successfully'];
+            return back()->withNotify($notify);
+        }
+
+        if ($employerFeaturedCount >= $featuredJobLimit) {
+            $notify[] = ['error', 'You have reached your limit of featured jobs.'];
+            return back()->withNotify($notify);
+        }
+
+        $job->featured = Status::YES;
+        $job->save();
+
+        $notify[] = ['success', 'Job Featured successfully'];
+        return back()->withNotify($notify);
     }
 }

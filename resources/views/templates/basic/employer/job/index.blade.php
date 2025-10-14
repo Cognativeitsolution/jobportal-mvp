@@ -100,6 +100,25 @@
                                                         <i class="fas fa-users"></i>
                                                     </a>
                                                 @endif
+                                                @if ($job->status != Status::JOB_EXPIRED && $job->status != Status::JOB_REJECTED)
+                                                    @if ($job->featured)
+                                                        <button
+                                                            class="dropdown-item confirmationBtn btn-outline--success px-2 py-1 w-auto"
+                                                            data-action="{{ route('employer.job.featured', $job->id) }}"
+                                                            data-question="@lang('Are you sure to unfeatured this job?')">
+                                                            <i class="las la-star-of-life"></i>
+                                                            @lang('Unfeatured It')
+                                                        </button>
+                                                    @else
+                                                        <button
+                                                            class="dropdown-item confirmationBtn btn-outline--success px-2 py-1 w-auto"
+                                                            data-action="{{ route('employer.job.featured', $job->id) }}"
+                                                            data-question="@lang('Are you sure to featured this job?')">
+                                                            <i class="las la-star-of-life"></i>
+                                                            @lang('Featured It')
+                                                        </button>
+                                                    @endif
+                                                @endif
                                                 <a href="{{ route('employer.job.clone', $job->id) }}" class="action-btn"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-title="@lang('Clone Job')" target="_blank">
@@ -131,6 +150,8 @@
         </div>
     </div>
 
+
+
     <div class="modal fade custom--modal fade-in-scale" id="rejectModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -148,6 +169,57 @@
             </div>
         </div>
     </div>
+
+    <!-- Confirmation Modal -->
+    {{-- <div class="modal fade custom--modal fade-in-scale" id="confirmationModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form method="POST" class="confirmationForm">
+                    @csrf
+                    <div class="modal-header">
+                        <h6 class="modal-title">@lang('Confirmation')</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <i class="las la-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="question-text mb-0"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--danger"
+                            data-bs-dismiss="modal">@lang('Cancel')</button>
+                        <button type="submit" class="btn btn--primary">@lang('Yes')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> --}}
+
+    <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@lang('Confirmation Alert!')</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="las la-times"></i>
+                    </button>
+                </div>
+                <form method="POST" class="confirmationForm">
+                    @csrf
+                    <div class="modal-body">
+                        <p class="question-text mb-0"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--dark" data-bs-dismiss="modal">@lang('No')</button>
+                        <button type="submit" class="btn btn--primary">@lang('Yes')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
 @endsection
 
 @push('style-lib')
@@ -176,6 +248,81 @@
             });
         })(jQuery)
     </script>
+@endpush
+
+@push('script')
+    <script>
+        (function($) {
+            'use strict';
+
+            $('.select2').select2();
+
+            $('.rejectBtn').on('click', function() {
+                let modal = $('#rejectModal');
+                modal.find('.reason').html($(this).data('reason'));
+                modal.modal('show');
+            });
+
+            $('[name="status"]').on('change', function() {
+                $('#statusForm').submit();
+            });
+
+            $('.confirmationBtn').on('click', function(e) {
+                e.preventDefault();
+                let action = $(this).data('action');
+                let question = $(this).data('question');
+
+                let modal = $('#confirmationModal');
+                modal.find('.question-text').text(question);
+                modal.find('form.confirmationForm').attr('action', action);
+                modal.modal('show');
+            });
+        })(jQuery)
+    </script>
+@endpush
+
+@push('style')
+    <style>
+        .dropdown-item {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .dropdown-menu {
+            padding: 0;
+        }
+
+        .btn-outline--success {
+            --color: #28c76f;
+            color: var(--color) !important;
+            border: 1px solid var(--color) !important;
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-outline--success:hover {
+            background-color: var(--color) !important;
+            color: #fff !important;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn--primary {
+            --color: #4634ff;
+            background-color: var(--color) !important;
+            border: 1px solid var(--color) !important;
+            color: white !important;
+        }
+
+        .btn--dark {
+            --color: #10163a;
+            background-color: var(--color) !important;
+            border: 1px solid var(--color) !important;
+            color: white !important;
+        }
+    </style>
 @endpush
 
 @push('style')
