@@ -29,8 +29,7 @@
                         }
 
                         // Get current user role
-                        $userRole = auth()->user()->role ?? null;
-
+                        $userRole = auth()->guard('admin')->user()->role ?? null;
                         // Check if admin access is required and user is not super_admin
                         $requiresAdmin = isset($setting->admin) && $setting->admin === true;
                         $isSuperAdmin = $userRole === 'super_admin';

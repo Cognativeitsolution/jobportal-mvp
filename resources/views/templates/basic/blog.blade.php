@@ -8,9 +8,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading  wow fadeInUp" data-wow-duration="2s">
-                        <h3 class="section-heading__title">
+                        <h2 class="section-heading__title">
                             @php echo styleSelectedWord(@$blogContent->data_values->heading ?? ''); @endphp
-                        </h3>
+                        </h2>
                     </div>
                 </div>
             </div>

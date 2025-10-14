@@ -20,7 +20,8 @@
                                 <div class="col-md-3 searchItem">
                                     <div class="frontend-section-card">
                                         <h6>{{ __($secs['name']) }}</h6>
-                                        <a href="{{ route('admin.frontend.sections', $k) }}" class="btn btn--light btn-sm"><i class="las la-cog me-0"></i></a>
+                                        <a href="{{ route('admin.frontend.sections', $k) }}"
+                                            class="btn btn--light btn-sm"><i class="las la-cog me-0"></i></a>
                                     </div>
                                 </div>
                             @endif
@@ -43,7 +44,8 @@
             background: #fff;
             transition: all .2s;
         }
-        .frontend-section-card:hover{
+
+        .frontend-section-card:hover {
             background: #e7e7e7;
         }
 
@@ -89,7 +91,8 @@
 
                 searchItem.filter(function(idx, elem) {
 
-                    if ($(elem).find('.frontend-section-card h6').text().trim().toLowerCase().indexOf(searchInput) >= 0) {
+                    if ($(elem).find('.frontend-section-card h6').text().trim().toLowerCase().indexOf(
+                            searchInput) >= 0) {
                         $(elem).show();
                         emptyArea.empty();
                         empty = false;

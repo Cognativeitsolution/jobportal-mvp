@@ -176,6 +176,57 @@
             "modal": false
         }
     },
+    "ad01": {
+        "builder": true,
+        "name": "Ad Banner One",
+        "content": {
+            "heading": "text",
+            "description": "textarea-nic",
+            "images": {
+                "image": {
+                    "size": "1690x590",
+                    "thumb": "845x295"
+                }
+            },
+            "button_text": "text",
+            "button_url": "text",
+            "margin": "number"
+        }
+    },
+    "ad02": {
+        "builder": true,
+        "name": "Ad Banner Two",
+        "content": {
+            "heading": "text",
+            "description": "textarea-nic",
+            "images": {
+                "image": {
+                    "size": "1690x590",
+                    "thumb": "845x295"
+                }
+            },
+            "button_text": "text",
+            "button_url": "text",
+            "margin": "number"
+        }
+    },
+    "ad03": {
+        "builder": true,
+        "name": "Ad Banner Three",
+        "content": {
+            "heading": "text",
+            "description": "textarea-nic",
+            "images": {
+                "image": {
+                    "size": "1690x590",
+                    "thumb": "845x295"
+                }
+            },
+            "button_text": "text",
+            "button_url": "text",
+            "margin": "number"
+        }
+    },
     "blog": {
         "builder": true,
         "name": "Blogs",
