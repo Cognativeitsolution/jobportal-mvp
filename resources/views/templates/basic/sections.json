@@ -189,7 +189,8 @@
                 }
             },
             "button_text": "text",
-            "button_url": "text"
+            "button_url": "text",
+            "margin": "number"
         }
     },
     "ad02": {
@@ -205,7 +206,8 @@
                 }
             },
             "button_text": "text",
-            "button_url": "text"
+            "button_url": "text",
+            "margin": "number"
         }
     },
     "ad03": {
@@ -221,7 +223,8 @@
                 }
             },
             "button_text": "text",
-            "button_url": "text"
+            "button_url": "text",
+            "margin": "number"
         }
     },
     "blog": {
