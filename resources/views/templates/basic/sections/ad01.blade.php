@@ -3,11 +3,13 @@
     $bannerHeading = styleSelectedWord(@$adContent->data_values->heading ?? '', 2, true);
 @endphp
 
-<div class="create_resume_sec" style="margin: {{ @$adContent->data_values->margin }};">
+<div
+    class="create_resume_sec"style="margin:  @if (@$adContent->data_values->margin && @$adContent->data_values->margin != 0) {{ @$adContent->data_values->margin }}; @endif">
     <div class="container">
 
+        @if
         <div class="sec_wrapper"
-            @if (@$adContent->data_values->has_image && @$adContent->data_values->image) style="background-image: url('{{ getImage('assets/images/frontend/ad01/' . @$adContent->data_values->image) }}'); background-size: cover; background-position: center;" @endif>
+            @if (@$adContent->data_values->has_image && @$adContent->data_values->image) style="background-image: url('{{ getImage('assets/images/frontend/ad01/' . @$adContent->data_values->image ?? '1690x590') }}'); background-size: cover; background-position: center;" @endif>
             <div class="row">
                 <div class="col-12">
                     <div class="sec_txt">

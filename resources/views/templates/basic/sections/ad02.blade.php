@@ -7,7 +7,7 @@
     <div class="container">
 
         <div class="sec_wrapper"
-            @if (@$adContent->data_values->has_image && @$adContent->data_values->image) style="background-image: url('{{ getImage('assets/images/frontend/ad02/' . @$adContent->data_values->image) }}'); background-size: cover; background-position: center;" @endif>
+            @if (@$adContent->data_values->has_image && @$adContent->data_values->image) style="background-image: url('{{ getImage('assets/images/frontend/ad02/' . @$adContent->data_values->image ?? '1690x590') }}'); background-size: cover; background-position: center;" @endif>
             <div class="row">
                 <div class="col-12">
                     <div class="sec_txt">
