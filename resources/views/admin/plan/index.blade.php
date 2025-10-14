@@ -12,6 +12,7 @@
                                     <th>@lang('Amount')</th>
                                     <th>@lang('Duration')</th>
                                     <th>@lang('Total Job Post')</th>
+                                    <th>@lang('Total Featured Jobs')</th>
                                     <th>@lang('Status')</th>
                                     <th>@lang('Action')</th>
                                 </tr>
@@ -23,6 +24,7 @@
                                         <td><span class="fw-bold">{{ showAmount($plan->price) }}</span></td>
                                         <td>{{ $plan->duration }} @lang('months')</td>
                                         <td>{{ $plan->job_post }}</td>
+                                        <td>{{ $plan->featured_job_post }}</td>
                                         <td> @php echo $plan->statusBadge; @endphp</td>
                                         <td>
                                             <button class="btn btn-sm btn-outline--info" data-bs-toggle="dropdown"
@@ -116,6 +118,12 @@
                                     <input class="form-control" type="number" name="job_post" required>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>@lang('Featured Job Post Limit')</label>
+                                    <input class="form-control" type="number" name="featured_job_post" required>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -150,6 +158,7 @@
                 modal.find('[name="price"]').val('');
                 modal.find('[name="duration"]').val('');
                 modal.find('[name="job_post"]').val('');
+                modal.find('[name="featured_job_post"]').val('');
                 modal.modal('show');
             });
 
@@ -161,6 +170,7 @@
                 modal.find('[name="price"]').val(parseFloat(plan.price).toFixed(2));
                 modal.find('[name="duration"]').val(plan.duration);
                 modal.find('[name="job_post"]').val(plan.job_post);
+                modal.find('[name="featured_job_post"]').val(plan.featured_job_post);
                 modal.modal('show');
             });
         })(jQuery)

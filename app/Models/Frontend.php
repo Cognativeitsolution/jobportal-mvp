@@ -8,7 +8,7 @@ class Frontend extends Model
 {
     protected $casts = [
         'data_values' => 'object',
-        'seo_content' => 'object'
+        'seo_content' => 'object',
     ];
 
     public static function scopeGetContent($data_keys)

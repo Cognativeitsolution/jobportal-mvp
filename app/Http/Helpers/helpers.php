@@ -15,18 +15,21 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
-function systemDetails() {
+function systemDetails()
+{
     $system['name']          = 'joblab';
     $system['version']       = '4.0';
     $system['build_version'] = '5.1.13';
     return $system;
 }
 
-function slug($string) {
+function slug($string)
+{
     return Str::slug($string);
 }
 
-function verificationCode($length) {
+function verificationCode($length)
+{
     if ($length == 0) {
         return 0;
     }
@@ -36,7 +39,8 @@ function verificationCode($length) {
     return random_int($min, $max);
 }
 
-function getNumber($length = 8) {
+function getNumber($length = 8)
+{
     $characters       = '1234567890';
     $charactersLength = strlen($characters);
     $randomString     = '';
@@ -46,7 +50,8 @@ function getNumber($length = 8) {
     return $randomString;
 }
 
-function activeTemplate($asset = false) {
+function activeTemplate($asset = false)
+{
     $template = session('template') ?? gs('active_template');
     if ($asset) {
         return 'assets/templates/' . $template . '/';
@@ -55,38 +60,46 @@ function activeTemplate($asset = false) {
     return 'templates.' . $template . '.';
 }
 
-function activeTemplateName() {
+function activeTemplateName()
+{
     $template = session('template') ?? gs('active_template');
     return $template;
 }
 
-function siteLogo($type = null) {
+function siteLogo($type = null)
+{
     $name = $type ? "/logo_$type.png" : '/logo.png';
     return getImage(getFilePath('logoIcon') . $name);
 }
 
-function siteFavicon() {
+function siteFavicon()
+{
     return getImage(getFilePath('logoIcon') . '/favicon.png');
 }
 
-function loadReCaptcha() {
+function loadReCaptcha()
+{
     return Captcha::reCaptcha();
 }
 
-function loadCustomCaptcha($width = '100%', $height = 46, $bgColor = '#003') {
+function loadCustomCaptcha($width = '100%', $height = 46, $bgColor = '#003')
+{
     return Captcha::customCaptcha($width, $height, $bgColor);
 }
 
-function verifyCaptcha() {
+function verifyCaptcha()
+{
     return Captcha::verify();
 }
 
-function loadExtension($key) {
+function loadExtension($key)
+{
     $extension = Extension::where('act', $key)->where('status', Status::ENABLE)->first();
     return $extension ? $extension->generateScript() : '';
 }
 
-function getTrx($length = 12) {
+function getTrx($length = 12)
+{
     $characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
     $charactersLength = strlen($characters);
     $randomString     = '';
@@ -96,12 +109,14 @@ function getTrx($length = 12) {
     return $randomString;
 }
 
-function getAmount($amount, $length = 2) {
+function getAmount($amount, $length = 2)
+{
     $amount = round($amount ?? 0, $length);
     return $amount + 0;
 }
 
-function showAmount($amount, $decimal = 2, $separate = true, $exceptZeros = false, $currencyFormat = true, $kFormat = false) {
+function showAmount($amount, $decimal = 2, $separate = true, $exceptZeros = false, $currencyFormat = true, $kFormat = false)
+{
     $separator = '';
     if ($separate && !$kFormat) {
         $separator = ',';
@@ -130,40 +145,48 @@ function showAmount($amount, $decimal = 2, $separate = true, $exceptZeros = fals
     return $printAmount;
 }
 
-function removeElement($array, $value) {
+function removeElement($array, $value)
+{
     return array_diff($array, (is_array($value) ? $value : array($value)));
 }
 
-function cryptoQR($wallet) {
+function cryptoQR($wallet)
+{
     return "https://api.qrserver.com/v1/create-qr-code/?data=$wallet&size=300x300&ecc=m";
 }
 
-function keyToTitle($text) {
+function keyToTitle($text)
+{
     return ucfirst(preg_replace("/[^A-Za-z0-9 ]/", ' ', $text));
 }
 
-function titleToKey($text) {
+function titleToKey($text)
+{
     return strtolower(str_replace(' ', '_', $text));
 }
 
-function strLimit($title = null, $length = 10) {
+function strLimit($title = null, $length = 10)
+{
     return Str::limit($title, $length);
 }
 
-function getIpInfo() {
+function getIpInfo()
+{
     $ipInfo = ClientInfo::ipInfo();
     return $ipInfo;
 }
 
-function osBrowser() {
+function osBrowser()
+{
     $osBrowser = ClientInfo::osBrowser();
     return $osBrowser;
 }
 
-function getTemplates() {
+function getTemplates()
+{
     $param['purchasecode'] = env("PURCHASECODE");
     $param['website']      = @$_SERVER['HTTP_HOST'] . @$_SERVER['REQUEST_URI'] . ' - ' . env("APP_URL");
-    $url                   = null; 
+    $url                   = null;
     $response              = CurlRequest::curlPostContent($url, $param);
     if ($response) {
         return $response;
@@ -172,9 +195,11 @@ function getTemplates() {
     }
 }
 
-function getPageSections($arr = false) {
+function getPageSections($arr = false)
+{
     $jsonUrl  = resource_path('views/') . str_replace('.', '/', activeTemplate()) . 'sections.json';
     $sections = json_decode(file_get_contents($jsonUrl));
+
     if ($arr) {
         $sections = json_decode(file_get_contents($jsonUrl), true);
         ksort($sections);
@@ -182,7 +207,8 @@ function getPageSections($arr = false) {
     return $sections;
 }
 
-function getImage($image, $size = null) {
+function getImage($image, $size = null)
+{
     $clean = '';
     if (file_exists($image) && is_file($image)) {
         return asset($image) . $clean;
@@ -190,10 +216,11 @@ function getImage($image, $size = null) {
     if ($size) {
         return route('placeholder.image', $size);
     }
-    return asset('assets/images/default.png');
+    return $image;
 }
 
-function notify($user, $templateName, $shortCodes = null, $sendVia = null, $createLog = true, $pushImage = null) {
+function notify($user, $templateName, $shortCodes = null, $sendVia = null, $createLog = true, $pushImage = null)
+{
     $globalShortCodes = [
         'site_name'       => gs('site_name'),
         'site_currency'   => gs('cur_text'),
@@ -216,18 +243,21 @@ function notify($user, $templateName, $shortCodes = null, $sendVia = null, $crea
     $notify->send();
 }
 
-function getPaginate($paginate = null) {
+function getPaginate($paginate = null)
+{
     if (!$paginate) {
         $paginate = gs('paginate_number');
     }
     return $paginate;
 }
 
-function paginateLinks($data, $view = null) {
+function paginateLinks($data, $view = null)
+{
     return $data->appends(request()->all())->links($view);
 }
 
-function menuActive($routeName, $type = null, $param = null) {
+function menuActive($routeName, $type = null, $param = null)
+{
     if ($type == 3) {
         $class = 'side-menu--open';
     } else if ($type == 2) {
@@ -255,7 +285,8 @@ function menuActive($routeName, $type = null, $param = null) {
     }
 }
 
-function fileUploader($file, $location, $size = null, $old = null, $thumb = null, $filename = null) {
+function fileUploader($file, $location, $size = null, $old = null, $thumb = null, $filename = null)
+{
     $fileManager           = new FileManager($file);
     $fileManager->path     = $location;
     $fileManager->size     = $size;
@@ -266,23 +297,28 @@ function fileUploader($file, $location, $size = null, $old = null, $thumb = null
     return $fileManager->filename;
 }
 
-function fileManager() {
+function fileManager()
+{
     return new FileManager();
 }
 
-function getFilePath($key) {
+function getFilePath($key)
+{
     return fileManager()->$key()->path;
 }
 
-function getFileSize($key) {
+function getFileSize($key)
+{
     return fileManager()->$key()->size;
 }
 
-function getFileExt($key) {
+function getFileExt($key)
+{
     return fileManager()->$key()->extensions;
 }
 
-function diffForHumans($date) {
+function diffForHumans($date)
+{
     $lang = session()->get('lang');
     if (!$lang) {
         $lang = getDefaultLang();
@@ -291,7 +327,8 @@ function diffForHumans($date) {
     return Carbon::parse($date)->diffForHumans();
 }
 
-function showDateTime($date, $format = 'Y-m-d h:i A') {
+function showDateTime($date, $format = 'Y-m-d h:i A')
+{
     if (!$date) {
         return '-';
     }
@@ -303,11 +340,13 @@ function showDateTime($date, $format = 'Y-m-d h:i A') {
     return Carbon::parse($date)->translatedFormat($format);
 }
 
-function getDefaultLang() {
+function getDefaultLang()
+{
     return Language::where('is_default', Status::YES)->first()->code ?? 'en';
 }
 
-function getContent($dataKeys, $singleQuery = false, $limit = null, $orderById = false) {
+function getContent($dataKeys, $singleQuery = false, $limit = null, $orderById = false)
+{
     $templateName = activeTemplateName();
     if ($singleQuery) {
         $content = Frontend::where('tempname', $templateName)->where('data_keys', $dataKeys)->orderBy('id', 'desc')->first();
@@ -325,7 +364,8 @@ function getContent($dataKeys, $singleQuery = false, $limit = null, $orderById =
     return $content;
 }
 
-function verifyG2fa($user, $code, $secret = null) {
+function verifyG2fa($user, $code, $secret = null)
+{
     $authenticator = new GoogleAuthenticator();
     if (!$secret) {
         $secret = $user->tsc;
@@ -341,7 +381,8 @@ function verifyG2fa($user, $code, $secret = null) {
     }
 }
 
-function urlPath($routeName, $routeParam = null) {
+function urlPath($routeName, $routeParam = null)
+{
     if ($routeParam == null) {
         $url = route($routeName);
     } else {
@@ -352,17 +393,20 @@ function urlPath($routeName, $routeParam = null) {
     return $path;
 }
 
-function showMobileNumber($number) {
+function showMobileNumber($number)
+{
     $length = strlen($number);
     return substr_replace($number, '***', 2, $length - 4);
 }
 
-function showEmailAddress($email) {
+function showEmailAddress($email)
+{
     $endPosition = strpos($email, '@') - 1;
     return substr_replace($email, '***', 1, $endPosition);
 }
 
-function getRealIP() {
+function getRealIP()
+{
     $ip = $_SERVER["REMOTE_ADDR"];
     //Deep detect ip
     if (filter_var(@$_SERVER['HTTP_FORWARDED'], FILTER_VALIDATE_IP)) {
@@ -389,20 +433,24 @@ function getRealIP() {
     return $ip;
 }
 
-function appendQuery($key, $value) {
+function appendQuery($key, $value)
+{
     return request()->fullUrlWithQuery([$key => $value]);
 }
 
-function dateSort($a, $b) {
+function dateSort($a, $b)
+{
     return strtotime($a) - strtotime($b);
 }
 
-function dateSorting($arr) {
+function dateSorting($arr)
+{
     usort($arr, "dateSort");
     return $arr;
 }
 
-function gs($key = null) {
+function gs($key = null)
+{
     $general = Cache::get('GeneralSetting');
     if (!$general) {
         $general = GeneralSetting::first();
@@ -415,7 +463,8 @@ function gs($key = null) {
     return $general;
 }
 
-function isImage($string) {
+function isImage($string)
+{
     $allowedExtensions = array('jpg', 'jpeg', 'png', 'gif');
     $fileExtension     = pathinfo($string, PATHINFO_EXTENSION);
     if (in_array($fileExtension, $allowedExtensions)) {
@@ -425,7 +474,8 @@ function isImage($string) {
     }
 }
 
-function isHtml($string) {
+function isHtml($string)
+{
     if (preg_match('/<.*?>/', $string)) {
         return true;
     } else {
@@ -433,7 +483,8 @@ function isHtml($string) {
     }
 }
 
-function convertToReadableSize($size) {
+function convertToReadableSize($size)
+{
     preg_match('/^(\d+)([KMG])$/', $size, $matches);
     $size = (int) $matches[1];
     $unit = $matches[2];
@@ -449,14 +500,16 @@ function convertToReadableSize($size) {
     return $size . $unit;
 }
 
-function frontendImage($sectionName, $image, $size = null, $seo = false) {
+function frontendImage($sectionName, $image, $size = null, $seo = false)
+{
     if ($seo) {
         return getImage('assets/images/frontend/' . $sectionName . '/seo/' . $image, $size);
     }
     return getImage('assets/images/frontend/' . $sectionName . '/' . $image, $size);
 }
 
-function styleSelectedWord($htmlContent, $length = 1, $isArray = false) {
+function styleSelectedWord($htmlContent, $length = 1, $isArray = false)
+{
     $words = explode(' ', trans($htmlContent));
     if (count($words) > 0) {
         $styleWords = array_splice($words, -$length);
@@ -476,15 +529,18 @@ function styleSelectedWord($htmlContent, $length = 1, $isArray = false) {
     return $words;
 }
 
-function authUser($guard = null) {
+function authUser($guard = null)
+{
     return $guard ? auth()->guard($guard)->user() : auth()->user();
 }
 
-function authCheck() {
+function authCheck()
+{
     return auth()->check() || auth()->guard('employer')->check() ? true : false;
 }
 
-function getProfileImage($filename, $path = 'userProfile') {
+function getProfileImage($filename, $path = 'userProfile')
+{
     if ($filename) {
         return getImage(getFilePath($path) . '/' . $filename, getFileSize($path));
     } else {
@@ -492,7 +548,8 @@ function getProfileImage($filename, $path = 'userProfile') {
     }
 }
 
-function fileSizeInB($filePath) {
+function fileSizeInB($filePath)
+{
     if (!file_exists($filePath)) {
         return;
     }
@@ -507,7 +564,8 @@ function fileSizeInB($filePath) {
     return $fileSize;
 }
 
-function buildResponse($remark, $status, $notify, $data = null) {
+function buildResponse($remark, $status, $notify, $data = null)
+{
     $response = [
         'remark' => $remark,
         'status' => $status,

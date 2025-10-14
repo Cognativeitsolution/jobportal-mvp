@@ -9,14 +9,17 @@ use App\Rules\FileTypeValidate;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class FrontendController extends Controller {
+class FrontendController extends Controller
+{
 
-    public function index() {
+    public function index()
+    {
         $pageTitle = 'Manage Frontend Content';
         return view('admin.frontend.index', compact('pageTitle'));
     }
 
-    public function templates() {
+    public function templates()
+    {
         abort(404);
         $pageTitle = 'Templates';
         $temPaths  = array_filter(glob('core/resources/views/templates/*'), 'is_dir');
@@ -28,10 +31,10 @@ class FrontendController extends Controller {
         }
         $extraTemplates = json_decode(getTemplates(), true);
         return view('admin.frontend.templates', compact('pageTitle', 'templates', 'extraTemplates'));
-
     }
 
-    public function templatesActive(Request $request) {
+    public function templatesActive(Request $request)
+    {
         $general = gs();
 
         $general->active_template = $request->name;
@@ -41,7 +44,8 @@ class FrontendController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function seoEdit() {
+    public function seoEdit()
+    {
         $pageTitle = 'SEO Configuration';
         $seo       = Frontend::where('data_keys', 'seo.data')->first();
         if (!$seo) {
@@ -55,7 +59,8 @@ class FrontendController extends Controller {
         return view('admin.frontend.seo', compact('pageTitle', 'seo'));
     }
 
-    public function frontendSections($key) {
+    public function frontendSections($key)
+    {
         $section = isset(getPageSections()->$key) ? getPageSections()->$key : null;
         abort_if(!$section || !$section->builder, 404);
         $content   = Frontend::where('data_keys', $key . '.content')->where('tempname', activeTemplateName())->orderBy('id', 'desc')->first();
@@ -64,7 +69,8 @@ class FrontendController extends Controller {
         return view('admin.frontend.section', compact('section', 'content', 'elements', 'key', 'pageTitle'));
     }
 
-    public function frontendContent(Request $request, $key) {
+    public function frontendContent(Request $request, $key)
+    {
         $purifier  = new \HTMLPurifier();
         $valInputs = $request->except('_token', 'image_input', 'key', 'status', 'type', 'id', 'slug');
         foreach ($valInputs as $keyName => $input) {
@@ -172,7 +178,8 @@ class FrontendController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function frontendElement($key, $id = null) {
+    public function frontendElement($key, $id = null)
+    {
         $section = isset(getPageSections()->$key) ? getPageSections()->$key : null;
         if (!$section) {
             return abort(404);
@@ -188,7 +195,8 @@ class FrontendController extends Controller {
         return view('admin.frontend.element', compact('section', 'key', 'pageTitle'));
     }
 
-    public function frontendElementSlugCheck($key, $id = null) {
+    public function frontendElementSlugCheck($key, $id = null)
+    {
         $content = Frontend::where('data_keys', $key . '.element')->where('tempname', activeTemplateName())->where('slug', request()->slug);
         if ($id) {
             $content = $content->where('id', '!=', $id);
@@ -199,7 +207,8 @@ class FrontendController extends Controller {
         ]);
     }
 
-    public function frontendSeo($key, $id) {
+    public function frontendSeo($key, $id)
+    {
         $hasSeo = isset(getPageSections()->$key->element->seo) ? getPageSections()->$key->element->seo : null;
         if (!$hasSeo) {
             abort(404);
@@ -209,7 +218,8 @@ class FrontendController extends Controller {
         return view('admin.frontend.frontend_seo', compact('pageTitle', 'key', 'data'));
     }
 
-    public function frontendSeoUpdate(Request $request, $key, $id) {
+    public function frontendSeoUpdate(Request $request, $key, $id)
+    {
         $request->validate([
             'image' => ['nullable', new FileTypeValidate(['jpeg', 'jpg', 'png'])],
         ]);
@@ -240,10 +250,10 @@ class FrontendController extends Controller {
 
         $notify[] = ['success', 'SEO content updated successfully'];
         return back()->withNotify($notify);
-
     }
 
-    protected function storeImage($imgJson, $type, $key, $image, $imgKey, $oldImage = null) {
+    protected function storeImage($imgJson, $type, $key, $image, $imgKey, $oldImage = null)
+    {
         $path = 'assets/images/frontend/' . $key;
         if ($type == 'element' || $type == 'content') {
             $size  = $imgJson?->$imgKey?->size;
@@ -256,7 +266,8 @@ class FrontendController extends Controller {
         return fileUploader($image, $path, $size, $oldImage, $thumb);
     }
 
-    public function remove($id) {
+    public function remove($id)
+    {
         $frontend = Frontend::findOrFail($id);
         $key      = explode('.', $frontend->data_keys)[0];
         $type     = explode('.', $frontend->data_keys)[1];
@@ -277,5 +288,4 @@ class FrontendController extends Controller {
         $notify[] = ['success', 'Content removed successfully'];
         return back()->withNotify($notify);
     }
-
 }
