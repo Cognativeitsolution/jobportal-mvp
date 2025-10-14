@@ -176,6 +176,54 @@
             "modal": false
         }
     },
+    "ad01": {
+        "builder": true,
+        "name": "Ad Banner One",
+        "content": {
+            "heading": "text",
+            "description": "textarea-nic",
+            "images": {
+                "image": {
+                    "size": "860x600",
+                    "thumb": "430x300"
+                }
+            },
+            "button_text": "text",
+            "button_url": "text"
+        }
+    },
+    "ad02": {
+        "builder": true,
+        "name": "Ad Banner Two",
+        "content": {
+            "heading": "text",
+            "description": "textarea-nic",
+            "images": {
+                "image": {
+                    "size": "860x600",
+                    "thumb": "430x300"
+                }
+            },
+            "button_text": "text",
+            "button_url": "text"
+        }
+    },
+    "ad03": {
+        "builder": true,
+        "name": "Ad Banner Three",
+        "content": {
+            "heading": "text",
+            "description": "textarea-nic",
+            "images": {
+                "image": {
+                    "size": "860x600",
+                    "thumb": "430x300"
+                }
+            },
+            "button_text": "text",
+            "button_url": "text"
+        }
+    },
     "blog": {
         "builder": true,
         "name": "Blogs",
