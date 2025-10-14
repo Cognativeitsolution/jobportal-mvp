@@ -96,7 +96,6 @@ class RegisterController extends Controller
         $employer->ts = Status::DISABLE;
         $employer->tv = Status::ENABLE;
         $employer->free_job_post_limit = gs('free_job_post_limit');
-        $employer->featured_job_post_limit = gs('featured_job_post_limit');
         $employer->featured_job_post_count = gs('featured_job_post_count');
         $employer->save();
 
