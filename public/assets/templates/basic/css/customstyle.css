@@ -104,15 +104,12 @@
 
 /* Creating Resume Start */
 
-.create_resume_sec {
-    padding: 90px 0;
-}
 
 .create_resume_sec .sec_wrapper {
     background-image: url(../images/background/create-resume-bg.png);
     background-repeat: no-repeat;
     background-size: 100% 450px;
-    padding: 0px 180px;
+    padding: 0px 140px;
     max-height: 600px;
     height: 450px;
     display: flex;
