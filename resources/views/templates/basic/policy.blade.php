@@ -53,31 +53,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Faqs Section Start -->
-        <!-- Creating Resume Start -->
-        <div class="create_resume_sec">
-            <div class="container">
-                <div class="sec_wrapper">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="sec_txt">
-                                <p>Stuck on Blank page?</p>
-                                <h3>Create ATS Friendly Resume with AI PRO RESUME</h3>
-                                <p>Our resume templates and cover letter templates are rigorously tested with top ATS
-                                    systems to guarantee perfect parsability so nothing gets missed.</p>
-                            </div>
-                            <div class="sec_btn">
-                                <a href="javascript:;">
-                                    Create Resume
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Creating Resume End -->
+        @endif
     </div>
 @endsection
 

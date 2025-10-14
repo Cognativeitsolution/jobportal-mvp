@@ -199,6 +199,7 @@ function getPageSections($arr = false)
 {
     $jsonUrl  = resource_path('views/') . str_replace('.', '/', activeTemplate()) . 'sections.json';
     $sections = json_decode(file_get_contents($jsonUrl));
+
     if ($arr) {
         $sections = json_decode(file_get_contents($jsonUrl), true);
         ksort($sections);
@@ -215,7 +216,7 @@ function getImage($image, $size = null)
     if ($size) {
         return route('placeholder.image', $size);
     }
-    return asset('assets/images/default.png');
+    return $image;
 }
 
 function notify($user, $templateName, $shortCodes = null, $sendVia = null, $createLog = true, $pushImage = null)
