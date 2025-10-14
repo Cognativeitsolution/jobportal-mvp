@@ -3,7 +3,7 @@
     $bannerHeading = styleSelectedWord(@$adContent->data_values->heading ?? '', 2, true);
 @endphp
 
-<div class="create_resume_sec">
+<div class="create_resume_sec" style="margin: {{ @$adContent->data_values->margin }};">
     <div class="container">
 
         <div class="sec_wrapper"
