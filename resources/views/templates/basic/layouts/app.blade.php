@@ -23,6 +23,9 @@
     <link href="{{ asset($activeTemplateTrue . 'css/main.css') }}" rel="stylesheet" />
     <link href="{{ asset($activeTemplateTrue . 'css/custom.css') }}" rel="stylesheet" />
 
+    <link href="{{ asset($activeTemplateTrue . 'css/customstyle.css') }}" rel="stylesheet" />
+
+
     @stack('style')
 
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/color.php') }}?color={{ gs('base_color') }}">
@@ -77,21 +80,21 @@
     @stack('script')
 
     <script>
-        (function($) {
+        (function ($) {
             "use strict";
 
-            $('.policy').on('click', function() {
-                $.get('{{ route('cookie.accept') }}', function(response) {
+            $('.policy').on('click', function () {
+                $.get('{{ route('cookie.accept') }}', function (response) {
                     $('.cookies-card').addClass('d-none');
                 });
             });
 
-            setTimeout(function() {
+            setTimeout(function () {
                 $('.cookies-card').removeClass('hide')
             }, 2000);
 
             var inputElements = $('input,select');
-            $.each(inputElements, function(index, element) {
+            $.each(inputElements, function (index, element) {
                 if (element.id) {
                     return false;
                 }
@@ -101,7 +104,7 @@
             });
 
             var inputElements = $('[type=text],select,textarea');
-            $.each(inputElements, function(index, element) {
+            $.each(inputElements, function (index, element) {
                 if (element.id) {
                     return false;
                 }
@@ -110,7 +113,7 @@
                 element.attr('id', element.attr('name'))
             });
 
-            $.each($('input, select, textarea'), function(i, element) {
+            $.each($('input, select, textarea'), function (i, element) {
                 var elementType = $(element);
                 if (elementType.attr('type') != 'checkbox') {
                     if (element.hasAttribute('required')) {
@@ -119,7 +122,7 @@
                 }
             });
 
-            $.each($('input:not([type=checkbox]):not([type=hidden]), select, textarea'), function(i, element) {
+            $.each($('input:not([type=checkbox]):not([type=hidden]), select, textarea'), function (i, element) {
                 if (element.hasAttribute('required')) {
                     $(element).closest('.form-group').find('label').addClass('required');
                 }
@@ -135,7 +138,7 @@
             });
 
             let disableSubmission = false;
-            $('.disableSubmission').on('submit', function(e) {
+            $('.disableSubmission').on('submit', function (e) {
                 if (disableSubmission) {
                     e.preventDefault()
                 } else {
@@ -143,7 +146,7 @@
                 }
             });
 
-            $('.showFilterBtn').on('click', function() {
+            $('.showFilterBtn').on('click', function () {
                 $('.responsive-filter-card').slideToggle();
             });
         })(jQuery);
