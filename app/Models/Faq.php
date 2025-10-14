@@ -13,8 +13,8 @@ class Faq extends Model
     use GlobalStatus;
 
     protected $fillable = [
-        'pageable_id',
-        'pageable_type',
+        'faqable_id',
+        'faqable_type',
         'question',
         'answer',
         'status',
@@ -23,7 +23,7 @@ class Faq extends Model
     /**
      * Polymorphic relation
      */
-    public function pageable()
+    public function faqable()
     {
         return $this->morphTo();
     }

@@ -15,4 +15,9 @@ class Frontend extends Model
     {
         return Frontend::where('data_keys', $data_keys);
     }
+
+    public function faqs()
+    {
+        return $this->morphMany(Faq::class, 'faqable');
+    }
 }

@@ -1,4 +1,4 @@
-INSERT INTO faqs (pageable_id, pageable_type, question, answer, status) VALUES
+INSERT INTO faqs (faqable_id, faqable_type, question, answer, status) VALUES
 (1, 'App\\Models\\Page', 'Does AI Job Orbit track my IP address?', 'AI Job Orbit gathers some technical pieces of information, like your IP address, your browser type, and additional device-related information. The data is used to enhance the security of the platform, combat fraud, and boost performance, thus giving the users one of the best online job portals'' safe and smooth experiences.', 1),
 
 (1, 'App\\Models\\Page', 'Can employers or other users see my personal information on AI Job Orbit?', 'No. Your personal information is always protected. AI Job Orbit does not share your data with recruiters, employers, or other users unless you choose to apply for a job or make your profile visible. You stay in complete control of what details are shared through your account.', 1),
