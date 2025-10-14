@@ -34,6 +34,7 @@ class PlanController extends Controller
         $expiredDate = Carbon::now()->addMonth($plan->duration)->format("Y-m-d");
         $employer->balance -= $plan->price;
         $employer->job_post_count      = $plan->job_post;
+        $employer->featured_job_post_count  = $plan->featured_job_post;
         $employer->plan_id             = $plan->id;
         $employer->expired_date        = $expiredDate;
         $employer->subscription_status = Status::SUBSCRIPTION_APPROVED;

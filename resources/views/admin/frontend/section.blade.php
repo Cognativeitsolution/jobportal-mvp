@@ -6,7 +6,8 @@
             <div class="col-lg-12 col-md-12 mb-30">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.frontend.sections.content', $key) }}" class="disableSubmission" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.frontend.sections.content', $key) }}" class="disableSubmission"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="type" value="content">
                             <div class="row">
@@ -23,7 +24,13 @@
                                                 <input type="hidden" name="has_image" value="1">
                                                 <div class="form-group">
                                                     <label>{{ __(keyToTitle(@$imgKey)) }}</label>
-                                                    <x-image-uploader class="w-100" name="image_input[{{ @$imgKey }}]" :imagePath="frontendImage($key,@$content->data_values->$imgKey,@$section->content->images->$imgKey->size)" id="image-upload-input{{ $loop->index }}" :size="$section->content->images->$imgKey->size" :required="false" />
+                                                    <x-image-uploader class="w-100" name="image_input[{{ @$imgKey }}]"
+                                                        :imagePath="frontendImage(
+                                                            $key,
+                                                            @$content->data_values->$imgKey,
+                                                            @$section->content->images->$imgKey->size,
+                                                        )" id="image-upload-input{{ $loop->index }}"
+                                                        :size="$section->content->images->$imgKey->size" :required="false" />
                                                 </div>
                                             </div>
                                         @endforeach
@@ -38,8 +45,11 @@
                                                     <div class="form-group ">
                                                         <label>{{ __(keyToTitle($k)) }}</label>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control iconPicker icon" autocomplete="off" name="{{ $k }}" value="{{ @$content->data_values->$k }}" required>
-                                                            <span class="input-group-text  input-group-addon" data-icon="las la-home" role="iconpicker"></span>
+                                                            <input type="text" class="form-control iconPicker icon"
+                                                                autocomplete="off" name="{{ $k }}"
+                                                                value="{{ @$content->data_values->$k }}" required>
+                                                            <span class="input-group-text  input-group-addon"
+                                                                data-icon="las la-home" role="iconpicker"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -64,9 +74,13 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>{{ __(keyToTitle(@$selectName)) }}</label>
-                                                        <select class="form-control select2" data-minimum-results-for-search="-1" name="{{ @$selectName }}">
+                                                        <select class="form-control select2"
+                                                            data-minimum-results-for-search="-1"
+                                                            name="{{ @$selectName }}">
                                                             @foreach ($item->options as $selectItemKey => $selectOption)
-                                                                <option value="{{ $selectItemKey }}" @if (@$content->data_values->$selectName == $selectItemKey) selected @endif>{{ $selectOption }}</option>
+                                                                <option value="{{ $selectItemKey }}"
+                                                                    @if (@$content->data_values->$selectName == $selectItemKey) selected @endif>
+                                                                    {{ $selectOption }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -75,7 +89,9 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label>{{ __(keyToTitle($k)) }}</label>
-                                                        <input type="text" class="form-control" name="{{ $k }}" value="{{ @$content->data_values->$k }}" required>
+                                                        <input type="text" class="form-control"
+                                                            name="{{ $k }}"
+                                                            value="{{ @$content->data_values->$k }}" required>
                                                     </div>
                                                 </div>
                                             @endif
@@ -98,7 +114,8 @@
         <div class="d-flex flex-wrap justify-content-end mb-3">
             <div class="d-inline">
                 <div class="input-group justify-content-end">
-                    <input type="text" name="search_table" class="form-control bg--white" placeholder="@lang('Search')...">
+                    <input type="text" name="search_table" class="form-control bg--white"
+                        placeholder="@lang('Search')...">
                     <button class="btn btn--primary input-group-text"><i class="fas fa-search"></i></button>
                 </div>
             </div>
@@ -137,7 +154,8 @@
                                                 <td>
                                                     <div class="user d-flex justify-content-center">
                                                         <div class="thumb me-2">
-                                                            <img src="{{ frontendImage($key,@$data->data_values->$firstKey,@$section->element->images->$firstKey->size) }}" alt="image">
+                                                            <img src="{{ frontendImage($key, @$data->data_values->$firstKey, @$section->element->images->$firstKey->size) }}"
+                                                                alt="image">
                                                         </div>
                                                     </div>
 
@@ -161,25 +179,45 @@
                                             @endforeach
                                             <td>
                                                 <div class="button--group">
-                                                    @if(@$section->element->seo)
-                                                        <a href="{{ route('admin.frontend.sections.element.seo', [$key,$data->id]) }}" class="btn btn-sm btn-outline--info"><i class="la la-cog"></i> @lang('SEO Setting')</a>
+                                                    @if (@$section->element->seo)
+                                                        <a href="{{ route('admin.frontend.sections.element.seo', [$key, $data->id]) }}"
+                                                            class="btn btn-sm btn-outline--info"><i class="la la-cog"></i>
+                                                            @lang('SEO Setting')</a>
                                                     @endif
                                                     @if ($section->element->modal)
                                                         @php
                                                             $images = [];
                                                             if (@$section->element->images) {
-                                                                foreach ($section->element->images as $imgKey => $imgs) {
-                                                                    $images[] = frontendImage($key,@$data->data_values->$imgKey,@$section->element->images->$imgKey->size);
+                                                                foreach (
+                                                                    $section->element->images
+                                                                    as $imgKey => $imgs
+                                                                ) {
+                                                                    $images[] = frontendImage(
+                                                                        $key,
+                                                                        @$data->data_values->$imgKey,
+                                                                        @$section->element->images->$imgKey->size,
+                                                                    );
                                                                 }
                                                             }
                                                         @endphp
-                                                        <button class="btn btn-sm btn-outline--primary updateBtn" data-id="{{ $data->id }}" data-all="{{ json_encode($data->data_values) }}" @if (@$section->element->images) data-images="{{ json_encode($images) }}" @endif>
+                                                        <button class="btn btn-sm btn-outline--primary updateBtn"
+                                                            data-id="{{ $data->id }}"
+                                                            data-all="{{ json_encode($data->data_values) }}"
+                                                            @if (@$section->element->images) data-images="{{ json_encode($images) }}" @endif>
                                                             <i class="la la-pencil-alt"></i> @lang('Edit')
                                                         </button>
                                                     @else
-                                                        <a href="{{ route('admin.frontend.sections.element', [$key, $data->id]) }}" class="btn btn-sm btn-outline--primary"><i class="la la-pencil-alt"></i> @lang('Edit')</a>
+                                                        <a href="{{ route('admin.frontend.sections.element', [$key, $data->id]) }}"
+                                                            class="btn btn-sm btn-outline--info"><i class="la la-cog"></i>
+                                                            @lang('SEO Setting')</a>
+                                                        <a href="{{ route('admin.frontend.sections.element', [$key, $data->id]) }}"
+                                                            class="btn btn-sm btn-outline--primary"><i
+                                                                class="la la-pencil-alt"></i> @lang('Edit')</a>
                                                     @endif
-                                                    <button class="btn btn-sm btn-outline--danger confirmationBtn" data-action="{{ route('admin.frontend.remove', $data->id) }}" data-question="@lang('Are you sure to remove this item?')"><i class="la la-trash"></i> @lang('Remove')</button>
+                                                    <button class="btn btn-sm btn-outline--danger confirmationBtn"
+                                                        data-action="{{ route('admin.frontend.remove', $data->id) }}"
+                                                        data-question="@lang('Are you sure to remove this item?')"><i class="la la-trash"></i>
+                                                        @lang('Remove')</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -206,7 +244,8 @@
                             <i class="las la-times"></i>
                         </button>
                     </div>
-                    <form action="{{ route('admin.frontend.sections.content', $key) }}" class="disableSubmission" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.frontend.sections.content', $key) }}" class="disableSubmission"
+                        method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="type" value="element">
                         <div class="modal-body">
@@ -216,8 +255,10 @@
                                         <div class="form-group">
                                             <label>{{ __(keyToTitle($k)) }}</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control iconPicker icon" autocomplete="off" name="{{ $k }}" required>
-                                                <span class="input-group-text  input-group-addon" data-icon="las la-home" role="iconpicker"></span>
+                                                <input type="text" class="form-control iconPicker icon"
+                                                    autocomplete="off" name="{{ $k }}" required>
+                                                <span class="input-group-text  input-group-addon" data-icon="las la-home"
+                                                    role="iconpicker"></span>
                                             </div>
                                         </div>
                                     @elseif($k == 'select')
@@ -234,7 +275,9 @@
                                             <input type="hidden" name="has_image" value="1">
                                             <div class="form-group">
                                                 <label>{{ __(keyToTitle(@$imgKey)) }}</label>
-                                                <x-image-uploader class="w-100" name="image_input[{{ @$imgKey }}]" :imagePath="getImage('',@$section->element->images->$imgKey->size)" id="addImage{{ $loop->index }}" :size="$section->element->images->$imgKey->size" />
+                                                <x-image-uploader class="w-100" name="image_input[{{ @$imgKey }}]"
+                                                    :imagePath="getImage('', @$section->element->images->$imgKey->size)" id="addImage{{ $loop->index }}"
+                                                    :size="$section->element->images->$imgKey->size" />
                                             </div>
                                         @endforeach
                                     @elseif($type == 'textarea')
@@ -250,7 +293,8 @@
                                     @else
                                         <div class="form-group">
                                             <label>{{ __(keyToTitle($k)) }}</label>
-                                            <input type="text" class="form-control" name="{{ $k }}" required>
+                                            <input type="text" class="form-control" name="{{ $k }}"
+                                                required>
                                         </div>
                                     @endif
                                 @endif
@@ -274,7 +318,8 @@
                             <i class="las la-times"></i>
                         </button>
                     </div>
-                    <form action="{{ route('admin.frontend.sections.content', $key) }}" class="edit-route disableSubmission" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.frontend.sections.content', $key) }}"
+                        class="edit-route disableSubmission" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="type" value="element">
                         <input type="hidden" name="id">
@@ -285,8 +330,10 @@
                                         <div class="form-group">
                                             <label>{{ keyToTitle($k) }}</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control iconPicker icon" autocomplete="off" name="{{ $k }}" required>
-                                                <span class="input-group-text  input-group-addon" data-icon="las la-home" role="iconpicker"></span>
+                                                <input type="text" class="form-control iconPicker icon"
+                                                    autocomplete="off" name="{{ $k }}" required>
+                                                <span class="input-group-text  input-group-addon" data-icon="las la-home"
+                                                    role="iconpicker"></span>
                                             </div>
                                         </div>
                                     @elseif($k == 'select')
@@ -304,7 +351,10 @@
                                             <div class="form-group">
                                                 <label>{{ __(keyToTitle($k)) }}</label>
 
-                                                <x-image-uploader class="w-100" :imagePath="getImage('', $section->element->images->$imgKey->size)" name="image_input[{{ @$imgKey }}]" id="updateImage{{ $loop->index }}" :size="$section->element->images->$imgKey->size" :required="false" />
+                                                <x-image-uploader class="w-100" :imagePath="getImage('', $section->element->images->$imgKey->size)"
+                                                    name="image_input[{{ @$imgKey }}]"
+                                                    id="updateImage{{ $loop->index }}" :size="$section->element->images->$imgKey->size"
+                                                    :required="false" />
 
                                             </div>
                                         @endforeach
@@ -321,7 +371,8 @@
                                     @else
                                         <div class="form-group">
                                             <label>{{ keyToTitle($k) }}</label>
-                                            <input type="text" class="form-control" name="{{ $k }}" required>
+                                            <input type="text" class="form-control" name="{{ $k }}"
+                                                required>
                                         </div>
                                     @endif
                                 @endif
@@ -346,9 +397,11 @@
     <div class="d-flex flex-wrap justify-content-end gap-2 align-items-center">
         @if (@$section->element)
             @if ($section->element->modal)
-                <a href="javascript:void(0)" class="btn btn-sm btn-outline--primary addBtn"><i class="las la-plus"></i>@lang('Add New')</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-outline--primary addBtn"><i
+                        class="las la-plus"></i>@lang('Add New')</a>
             @else
-                <a href="{{ route('admin.frontend.sections.element', $key) }}" class="btn btn-sm btn-outline--primary"><i class="las la-plus"></i>@lang('Add New')</a>
+                <a href="{{ route('admin.frontend.sections.element', $key) }}" class="btn btn-sm btn-outline--primary"><i
+                        class="las la-plus"></i>@lang('Add New')</a>
             @endif
         @endif
         @if (!empty($templates))
@@ -362,13 +415,14 @@
                                 <option value="{{ $template['name'] }}">{{ __(keyToTitle($template['name'])) }}</option>
                             @endforeach
                         </select>
-                        <button type="submit" class="input-group-text btn btn-sm btn--primary">@lang('Import')</button>
+                        <button type="submit"
+                            class="input-group-text btn btn-sm btn--primary">@lang('Import')</button>
                     </div>
                 </form>
             </div>
         @endif
-        @if(!@$section->hide_builder)
-        <x-back route="{{ route('admin.frontend.index') }}" />
+        @if (!@$section->hide_builder)
+            <x-back route="{{ route('admin.frontend.index') }}" />
         @endif
     </div>
 @endpush
@@ -390,7 +444,7 @@
                 modal.modal('show');
             });
 
-            $(document).on('click','.updateBtn', function() {
+            $(document).on('click', '.updateBtn', function() {
                 var modal = $('#updateBtn');
                 modal.find('input[name=id]').val($(this).data('id'));
 
@@ -421,7 +475,8 @@
                 $(document).off('focusin.modal');
             });
             $('.iconPicker').iconpicker().on('iconpickerSelected', function(e) {
-                $(this).closest('.form-group').find('.iconpicker-input').val(`<i class="${e.iconpickerValue}"></i>`);
+                $(this).closest('.form-group').find('.iconpicker-input').val(
+                    `<i class="${e.iconpickerValue}"></i>`);
             });
         })(jQuery);
     </script>
