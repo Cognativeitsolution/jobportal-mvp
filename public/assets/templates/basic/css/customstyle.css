@@ -1,12 +1,44 @@
 .faqs_sec {
     padding: 90px 0 0;
+    position: relative;
+}
+
+.faqs_sec::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 12%;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/shapes/faqs_particle1.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: 70% 145%, cover;
+    opacity: 0.6;
+}
+
+.faqs_sec::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -45%;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/shapes/faqs_particle2.png);
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 40% 145%, cover;
+    opacity: 0.6;
 }
 
 .faqs_sec .accordion-item {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     border-radius: 7px;
     border: 0;
-    box-shadow: rgb(112 87 255 / 14%) 0px 0px 15px 2px;
+    /* box-shadow: rgb(112 87 255 / 14%) 0px 0px 15px 2px; */
+    box-shadow: 0px 0px 50px 8px #aeaeae2b;
 }
 
 .accordion-item:not(:first-of-type) {
@@ -32,7 +64,7 @@
 }
 
 .faqs_sec .accordion-button:not(.collapsed) {
-    padding: 1rem 1.25rem 0;
+    padding: 1.2rem 30px 0;
 }
 
 .faqs_sec .accordion-button {
@@ -40,17 +72,21 @@
 }
 
 .accordion-body {
-    padding: 20px 23px;
+    padding: 20px 30px 25px;
 }
 
 .faqs_sec .accordion-button::after {
     background-image: url(../images/shapes/faqs-plus.png),
-        linear-gradient(135deg, #7057ff99, #9d7dff52);
-    background-size: 15px 15px, cover;
+        linear-gradient(
+            93.48deg,
+            rgba(152, 133, 255, 0.25) 2.82%,
+            rgba(121, 169, 255, 0.25) 100%
+        );
+    background-size: 12px 12px, cover;
     background-position: center, center;
     background-repeat: no-repeat, no-repeat;
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     /* border: 1px solid #7057ff; */
     border-radius: 50px;
     content: "";
@@ -58,7 +94,14 @@
 
 .faqs_sec .accordion-button:not(.collapsed)::after {
     background-image: url(../images/shapes/faqs-minus.png),
-        linear-gradient(135deg, #7057ff99, #9d7dff52);
+        linear-gradient(
+            93.48deg,
+            rgba(152, 133, 255, 0.25) 2.82%,
+            rgba(121, 169, 255, 0.25) 100%
+        );
+    background-size: 12px 3px, cover;
+    margin-right: -8px;
+    margin-top: 1px;
 }
 
 /* Media Query */
