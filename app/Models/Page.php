@@ -15,4 +15,10 @@ class Page extends Model
     {
         return $query->where('is_default', Status::NO);
     }
+
+
+    public function faqs()
+    {
+        return $this->morphMany(Faq::class, 'faqable');
+    }
 }
