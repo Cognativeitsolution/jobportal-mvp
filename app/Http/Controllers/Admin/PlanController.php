@@ -7,19 +7,23 @@ use App\Models\Plan;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 
-class PlanController extends Controller {
-    public function index() {
+class PlanController extends Controller
+{
+    public function index()
+    {
         $plans     = Plan::orderBy('id', 'desc')->paginate(getPaginate());
         $pageTitle = "Manage Plan";
         return view('admin.plan.index', compact('pageTitle', 'plans'));
     }
 
-    public function save(Request $request, $id = 0) {
+    public function save(Request $request, $id = 0)
+    {
         $request->validate([
             'name'     => 'required|max:40|unique:plans,name,' . $id,
             'price'    => 'required|numeric|gte:0',
             'duration' => 'required|integer|gt:0',
             'job_post' => 'required|integer|gt:0',
+            'featured_job_post' => 'required|integer|gte:0',
         ]);
 
         if ($id) {
@@ -33,6 +37,7 @@ class PlanController extends Controller {
         $plan->name     = $request->name;
         $plan->price    = $request->price;
         $plan->job_post = $request->job_post;
+        $plan->featured_job_post = $request->featured_job_post;
         $plan->duration = $request->duration;
         $plan->save();
 
@@ -40,11 +45,13 @@ class PlanController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function status($id) {
+    public function status($id)
+    {
         return Plan::changeStatus($id);
     }
 
-    public function planSubscriberList($id = 0) {
+    public function planSubscriberList($id = 0)
+    {
         if ($id) {
             $plan          = Plan::findOrFail($id);
             $subscriptions = Subscription::where('plan_id', $plan->id);

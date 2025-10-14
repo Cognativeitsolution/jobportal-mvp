@@ -97,6 +97,8 @@ Route::middleware('employer')->group(function () {
             Route::get('create/{step?}/{slug?}/{jobId?}/{edit?}', 'create')->name('create');
             Route::get('edit/{id}', 'edit')->name('edit');
             Route::post('store/{id?}', 'store')->name('store');
+            Route::get('clone/{id}', 'clone')->name('clone');
+            Route::post('featured/{id}', 'featured')->name('featured');
 
             Route::post('basic/{id?}', 'basic')->name('basic');
             Route::post('information/{id?}', 'information')->name('information');

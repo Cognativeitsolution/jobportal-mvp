@@ -9,20 +9,24 @@ use App\Models\Frontend;
 use App\Rules\FileTypeValidate;
 use Illuminate\Http\Request;
 
-class GeneralSettingController extends Controller {
-    public function systemSetting() {
+class GeneralSettingController extends Controller
+{
+    public function systemSetting()
+    {
         $pageTitle = 'System Settings';
         $settings  = json_decode(file_get_contents(resource_path('views/admin/setting/settings.json')));
         return view('admin.setting.system', compact('pageTitle', 'settings'));
     }
-    public function general() {
+    public function general()
+    {
         $pageTitle       = 'General Setting';
         $timezones       = timezone_identifiers_list();
         $currentTimezone = array_search(config('app.timezone'), $timezones);
         return view('admin.setting.general', compact('pageTitle', 'timezones', 'currentTimezone'));
     }
 
-    public function generalUpdate(Request $request) {
+    public function generalUpdate(Request $request)
+    {
         $request->validate([
             'site_name'           => 'required|string|max:40',
             'cur_text'            => 'required|string|max:40',
@@ -33,6 +37,7 @@ class GeneralSettingController extends Controller {
             'paginate_number'     => 'required|integer',
             'fee_per_job_post'    => 'required|numeric|gt:0',
             'free_job_post_limit' => 'nullable|integer|gt:0',
+            'featured_job_post_limit' => 'nullable|integer|gt:0',
         ]);
 
         $timezones = timezone_identifiers_list();
@@ -47,6 +52,7 @@ class GeneralSettingController extends Controller {
         $general->currency_format     = $request->currency_format;
         $general->fee_per_job_post    = $request->fee_per_job_post;
         $general->free_job_post_limit = $request->free_job_post_limit;
+        $general->featured_job_post_limit = $request->featured_job_post_limit;
         $general->save();
 
         $timezoneFile = config_path('timezone.php');
@@ -57,12 +63,14 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function systemConfiguration() {
+    public function systemConfiguration()
+    {
         $pageTitle = 'System Configuration';
         return view('admin.setting.configuration', compact('pageTitle'));
     }
 
-    public function systemConfigurationSubmit(Request $request) {
+    public function systemConfigurationSubmit(Request $request)
+    {
         $general                        = gs();
         $general->registration          = $request->registration ? Status::ENABLE : Status::DISABLE;
         $general->employer_registration = $request->employer_registration ? Status::ENABLE : Status::DISABLE;
@@ -83,12 +91,14 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function logoIcon() {
+    public function logoIcon()
+    {
         $pageTitle = 'Logo & Favicon';
         return view('admin.setting.logo_icon', compact('pageTitle'));
     }
 
-    public function logoIconUpdate(Request $request) {
+    public function logoIconUpdate(Request $request)
+    {
         $request->validate([
             'logo'      => ['image', new FileTypeValidate(['jpg', 'jpeg', 'png'])],
             'logo_dark' => ['image', new FileTypeValidate(['jpg', 'jpeg', 'png'])],
@@ -126,21 +136,24 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function customCss() {
+    public function customCss()
+    {
         $pageTitle   = 'Custom CSS';
         $file        = activeTemplate(true) . 'css/custom.css';
         $fileContent = @file_get_contents($file);
         return view('admin.setting.custom_css', compact('pageTitle', 'fileContent'));
     }
 
-    public function sitemap() {
+    public function sitemap()
+    {
         $pageTitle   = 'Sitemap XML';
         $file        = 'sitemap.xml';
         $fileContent = @file_get_contents($file);
         return view('admin.setting.sitemap', compact('pageTitle', 'fileContent'));
     }
 
-    public function sitemapSubmit(Request $request) {
+    public function sitemapSubmit(Request $request)
+    {
         $file = 'sitemap.xml';
         if (!file_exists($file)) {
             fopen($file, "w");
@@ -150,14 +163,16 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function robot() {
+    public function robot()
+    {
         $pageTitle   = 'Robots TXT';
         $file        = 'robots.xml';
         $fileContent = @file_get_contents($file);
         return view('admin.setting.robots', compact('pageTitle', 'fileContent'));
     }
 
-    public function robotSubmit(Request $request) {
+    public function robotSubmit(Request $request)
+    {
         $file = 'robots.xml';
         if (!file_exists($file)) {
             fopen($file, "w");
@@ -167,7 +182,8 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function customCssSubmit(Request $request) {
+    public function customCssSubmit(Request $request)
+    {
         $file = activeTemplate(true) . 'css/custom.css';
         if (!file_exists($file)) {
             fopen($file, "w");
@@ -177,13 +193,15 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function maintenanceMode() {
+    public function maintenanceMode()
+    {
         $pageTitle   = 'Maintenance Mode';
         $maintenance = Frontend::where('data_keys', 'maintenance.data')->firstOrFail();
         return view('admin.setting.maintenance', compact('pageTitle', 'maintenance'));
     }
 
-    public function maintenanceModeSubmit(Request $request) {
+    public function maintenanceModeSubmit(Request $request)
+    {
         $request->validate([
             'description' => 'required',
             'image'       => ['nullable', new FileTypeValidate(['jpg', 'jpeg', 'png'])],
@@ -214,13 +232,15 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function cookie() {
+    public function cookie()
+    {
         $pageTitle = 'GDPR Cookie';
         $cookie    = Frontend::where('data_keys', 'cookie.data')->firstOrFail();
         return view('admin.setting.cookie', compact('pageTitle', 'cookie'));
     }
 
-    public function cookieSubmit(Request $request) {
+    public function cookieSubmit(Request $request)
+    {
         $request->validate([
             'short_desc'  => 'required|string|max:255',
             'description' => 'required',
@@ -236,12 +256,14 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function socialiteCredentials() {
+    public function socialiteCredentials()
+    {
         $pageTitle = 'Social Login Credentials';
         return view('admin.setting.social_credential', compact('pageTitle'));
     }
 
-    public function updateSocialiteCredentialStatus($key) {
+    public function updateSocialiteCredentialStatus($key)
+    {
         $general     = gs();
         $credentials = $general->socialite_credentials;
         try {
@@ -257,7 +279,8 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function updateSocialiteCredential(Request $request, $key) {
+    public function updateSocialiteCredential(Request $request, $key)
+    {
         $general     = gs();
         $credentials = $general->socialite_credentials;
         try {
@@ -273,12 +296,14 @@ class GeneralSettingController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function profileUpdateSetting() {
+    public function profileUpdateSetting()
+    {
         $pageTitle = 'Profile Update Percentage Setting';
         return view('admin.setting.resume', compact('pageTitle'));
     }
 
-    public function profileUpdateSettingSubmit(Request $request) {
+    public function profileUpdateSettingSubmit(Request $request)
+    {
         $request->validate([
             'resume_percentage'   => 'required|array',
             'resume_percentage.*' => 'required|numeric|min:0|max:100',
