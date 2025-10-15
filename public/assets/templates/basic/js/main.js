@@ -476,7 +476,7 @@
     // ==================== Dashboard User Profile Dropdown End ==================
 
     // wow js 
-    new WOW().init();
+    new WOW({ mobile: false }).init();
     // wow js end 
 
     // ========================= Odometer Counter Up Js End ==========

@@ -4234,8 +4234,8 @@ input[type="number"] {
 /* ===================== Scroll to Top Start ================================= */
 .scroll-top {
   position: fixed;
-  right: 30px;
-  bottom: 30px;
+  right: 25px;
+  bottom: 95px;
   color: hsl(var(--white));
   width: 48px;
   height: 48px;
@@ -4266,6 +4266,12 @@ input[type="number"] {
 .scroll-top.show {
   -webkit-transform: scale(1);
   transform: scale(1);
+}
+
+@media only screen and (max-width: 767px) {
+  .scroll-top {
+  right: 34px;
+  }
 }
 
 /* ===================== Scroll to Top End ================================= */
@@ -9415,7 +9421,7 @@ html .ui-button.ui-state-disabled:active {
 @media screen and (max-width: 575px) {
   .profile-wrapper .profile__thumb {
     width: 90px;
-    height: 90px;
+    height: 55px;
   }
 }
 
@@ -10544,6 +10550,14 @@ html .ui-button.ui-state-disabled:active {
 @media screen and (max-width: 767px) {
   .account-inner__left {
     display: none;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .account-form__text {
+    max-width: 200px;
+    margin: 0 auto;
+    line-height: 18px;
   }
 }
 
@@ -12612,7 +12626,23 @@ label.required:after {
 
 @media screen and (max-width: 991px) {
   .company-details-wrapper .candidate-profile {
-    gap: 30px;
+    gap: 15px 0px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .company-details-wrapper {
+    padding: 10px;
+  }
+
+  .company-details-wrapper .candidate-profile__right .overview-item__title {
+    font-size: 11px;
+    width: 38%;
+    gap: 1px;
+  }
+
+  .company-details-wrapper .candidate-profile__right .overview-item {
+    gap: 12px 0px;
   }
 }
 
@@ -12630,6 +12660,12 @@ label.required:after {
     padding-left: 0;
     border-top: 1px solid hsl(var(--border-color));
     padding-top: 30px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .company-details-wrapper .candidate-profile__right {
+    padding-top: 15px;
   }
 }
 
@@ -12662,6 +12698,7 @@ label.required:after {
   position: relative;
 }
 
+
 .custom--tab.tab-three .nav-item .nav-link {
   border: 0 !important;
   padding: 0 15px;
@@ -12671,6 +12708,18 @@ label.required:after {
 @media screen and (max-width: 1199px) {
   .custom--tab.tab-three .nav-item .nav-link {
     padding: 0 10px !important;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .custom--tab.tab-three .nav-item .nav-link {
+    border: 0 !important;
+    padding: 0 20px !important;
+    font-size: 14px;
+}
+
+  .company-details-wrapper .profile-wrapper {
+    margin-bottom: 30px;
   }
 }
 
@@ -12766,6 +12815,24 @@ label.required:after {
 
 .map .title {
   margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 576px) {
+  .overview-item__text {
+      font-size: 10px;
+  } 
+
+  .text-list__icon {
+    font-size: 16px;
+  }
+
+  .text-list__item {
+    font-size: 11px;
+  }
+
+  .candidate-profile__left .about__desc {
+      font-size: 13px;
+  }
 }
 
 /* company details page end */

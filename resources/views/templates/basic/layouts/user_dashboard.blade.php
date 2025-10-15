@@ -10,7 +10,7 @@
                     <div class="user-profile-body">
                         <div class="d-xl-none d-block">
                             <span class="user-sidebar-button">
-                                <i class="las la-user"></i>
+                                <i class="las la-cog"></i>
                             </span>
                         </div>
                         @yield('content')

@@ -8,7 +8,7 @@
         <div class="container">
             <div class="company-details-wrapper">
                 <div class="profile-wrapper">
-                    <div class="profile mb-5">
+                    <div class="profile mb-4 mb-sm-5">
                         <div class="profile__thumb">
                             <img src="{{ getProfileImage(@$employer->image, 'employer') }}" alt="company-image">
                         </div>
@@ -162,7 +162,18 @@
                                         </h6>
                                         <div class="overview-item__content">
                                             <span class="overview-item__text">
-                                                {{ __(@$employer->address) }}
+                                                 @php
+                                                    $address = trim(@$employer->address ?? '');
+                                                @endphp
+                                                @if($address)
+                                                    <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($address) }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer">
+                                                        {{ $address }}
+                                                    </a>
+                                                @else
+                                                    <span>N/A</span>
+                                                @endif
                                             </span>
                                         </div>
                                     </div>

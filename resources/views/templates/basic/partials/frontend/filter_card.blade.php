@@ -2,7 +2,7 @@
     <span class="sidebar-filter__close d-lg-none d-block"><i class="las la-times"></i></span>
     <div class="sidebar-header wow fadeInUp" data-wow-duration="2s">
         <h6 class="sidebar-header__filter">
-            @lang('All Filters')
+            @lang('All Filters sdfsdfsdfsd')
         </h6>
         <span class="sidebar-header__text">
             @lang('Applied')
@@ -101,7 +101,6 @@
                 </div>
             </div>
         @endif
-
         @if ($roles->count())
             <div class="filter-block wow fadeInUp" data-wow-duration="2s">
                 <div class="accordion-item">
