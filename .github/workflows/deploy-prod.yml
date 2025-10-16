@@ -39,13 +39,14 @@ jobs:
               git reset --hard origin/main
               git clean -fd
             fi
-
+            
       - name: Discord Notification
         if: always()
         uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: |
+          args: |
             ${{ job.status == 'success' && '✅' || '🚨' }} Deployment to **${{ github.ref_name }}** environment done.
             - Commit: ${{ github.event.head_commit.message }}
             - By: ${{ github.actor }}
