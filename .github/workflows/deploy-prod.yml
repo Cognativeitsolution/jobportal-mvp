@@ -19,20 +19,23 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-
             if [ "${{ github.ref_name }}" == "dev" ]; then
-
               cd /home/efinder24/dev.aijoborbit.com
+              git fetch --all
               git reset --hard
               git clean -fd
               git pull https://${{ secrets.GH_TOKEN }}@github.com/Cognativeitsolution/jobportal-mvp.git dev
+
             elif [ "${{ github.ref_name }}" == "staging" ]; then
               cd /home/efinder24/staging.aijoborbit.com
+              git fetch --all
               git reset --hard
               git clean -fd
               git pull https://${{ secrets.GH_TOKEN }}@github.com/Cognativeitsolution/jobportal-mvp.git staging
+
             elif [ "${{ github.ref_name }}" == "main" ]; then
               cd /home/efinder24/aijoborbit.com
+              git fetch --all
               git reset --hard
               git clean -fd
               git pull https://${{ secrets.GH_TOKEN }}@github.com/Cognativeitsolution/jobportal-mvp.git main
