@@ -1,0 +1,52 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: ["dev", "staging", "main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            BRANCH=${{ github.ref_name }}
+
+            if [ "$BRANCH" == "dev" ]; then
+              cd /home/efinder24/dev.aijoborbit.com
+              git fetch origin dev
+              git reset --hard origin/dev
+              git clean -fd
+
+            elif [ "$BRANCH" == "staging" ]; then
+              cd /home/efinder24/staging.aijoborbit.com
+              git fetch origin staging
+              git reset --hard origin/staging
+              git clean -fd
+
+            elif [ "$BRANCH" == "main" ]; then
+              cd /home/efinder24/aijoborbit.com
+              git fetch origin main
+              git reset --hard origin/main
+              git clean -fd
+            fi
+            
+      - name: Discord Notification
+        if: always()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: |
+            ${{ job.status == 'success' && '✅' || '🚨' }} Deployment to **${{ github.ref_name }}** environment done.
+            - Commit: ${{ github.event.head_commit.message }}
+            - By: ${{ github.actor }}
