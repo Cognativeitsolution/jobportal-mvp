@@ -2,8 +2,8 @@ name: Deploy to Production
 
 on:
   push:
-    branches: [ "dev", "staging", "main" ]
-    
+    branches: ["dev", "staging", "main"]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,23 +19,19 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            mkdir -p ~/.ssh
-            ssh-keyscan github.com >> ~/.ssh/known_hosts
 
             if [ "${{ github.ref_name }}" == "dev" ]; then
-              ssh-keyscan dev.aijoborbit.com >> ~/.ssh/known_hosts
+
               cd /home/efinder24/dev.aijoborbit.com
               git reset --hard
               git clean -fd
               git pull https://${{ secrets.GH_TOKEN }}@github.com/Cognativeitsolution/jobportal-mvp.git dev
             elif [ "${{ github.ref_name }}" == "staging" ]; then
-              ssh-keyscan staging.aijoborbit.com >> ~/.ssh/known_hosts
               cd /home/efinder24/staging.aijoborbit.com
               git reset --hard
               git clean -fd
               git pull https://${{ secrets.GH_TOKEN }}@github.com/Cognativeitsolution/jobportal-mvp.git staging
             elif [ "${{ github.ref_name }}" == "main" ]; then
-              ssh-keyscan aijoborbit.com >> ~/.ssh/known_hosts
               cd /home/efinder24/aijoborbit.com
               git reset --hard
               git clean -fd
@@ -51,4 +47,3 @@ jobs:
             ${{ job.status == 'success' && '✅' || '🚨' }} Deployment to **${{ github.ref_name }}** environment done.
             - Commit: ${{ github.event.head_commit.message }}
             - By: ${{ github.actor }}
-                                                                                                               
