@@ -37,14 +37,15 @@
                                 {{ gs('site_name') }} @lang('will not be responsible for any financial transactions or fraud by the company after applying through the website. We only connects companies and job seekers.')
                             </span>
                         </div>
-                        <form action="{{ route('user.job.apply', request()->id) }}" method="POST" class="modal-form disableSubmission">
+                        <form action="{{ route('user.job.apply', request()->id) }}" method="POST"
+                            enctype="multipart/form-data" class="modal-form disableSubmission">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-12 form-group">
                                     <div class="mb-2">
                                         <label class="form--label">@lang('Name')</label>
                                         <div class="input-group">
-                                            <input type="text" class="form--control form-control" name="name"
+                                            <input type="text" class="form--control form-control" name="full_name"
                                                 value="{{ old('name') }}" required>
                                         </div>
                                     </div>
@@ -65,15 +66,15 @@
                                     <div class="mb-2">
                                         <label class="form--label">@lang('Expected Salary')</label>
                                         <div class="input-group">
-                                            <input type="text" class="form--control form-control" name="expected_salary"
-                                                value="{{ old('expected_salary') }}" required>
+                                            <input type="text" class="form--control form-control"
+                                                name="expected_salary" value="{{ old('expected_salary') }}" required>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mb-2 mt-3">
                                         <div class="input-group">
-                                            <input type="radio" id="jobOrbitOption" name="resume_options" value="job_orbit"
-                                                required checked>
+                                            <input type="radio" id="jobOrbitOption" name="resume_options"
+                                                value="job_orbit" required checked>
                                             <label for="jobOrbitOption"
                                                 class="form--label mb-0 ms-2">@lang('Job Orbit Resume')</label>
                                         </div>
@@ -81,7 +82,8 @@
 
                                     <div class="mb-2">
                                         <div class="input-group">
-                                            <input type="radio" id="uploadOption" name="resume_options" value="upload" required>
+                                            <input type="radio" id="uploadOption" name="resume_options" value="upload"
+                                                required>
                                             <label for="uploadOption"
                                                 class="form--label mb-0 ms-2">@lang('Upload Resume')</label>
                                         </div>
@@ -92,7 +94,7 @@
                                         <label class="form--label">@lang('Upload Resume')</label>
                                         <div class="input-group">
                                             <input type="file" class="form--control form-control" id="resumeFile"
-                                                name="resumeFile" value="{{ old('resumeFile') }}">
+                                                name="resume" value="{{ old('resumeFile') }}">
                                         </div>
                                     </div>
                                 </div>

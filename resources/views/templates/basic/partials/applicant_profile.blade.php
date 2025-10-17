@@ -56,12 +56,19 @@
                         </button>
                     </div>
                 @endif
-                @if ($user->resume)
-                    <a class="download-link" href="{{ route('resume.download', $user->id) }}">
+
+                @if (@$userAppliedJob->resume)
+                    <a class="download-link" href="{{ asset('upload/resume/' . @$userAppliedJob->resume) }}" download>
+                        @lang('CV Download')
+                        <span class="icon text--base"><i class="las la-download"></i></span>
+                    </a>
+                @elseif ($user->resume)
+                    <a class="download-link" href="{{ route('resume.download', $user->id) }}" download>
                         @lang('CV Download')
                         <span class="icon text--base"><i class="las la-download"></i></span>
                     </a>
                 @endif
+
             </div>
         </div>
     </div>
