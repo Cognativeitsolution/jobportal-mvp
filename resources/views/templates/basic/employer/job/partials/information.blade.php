@@ -66,14 +66,14 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="form--label required">@lang('Vacancy')</label>
+                        <label class="form--label ">@lang('Vacancy')</label>
                         <input class="form--control" name="vacancy" type="number"
                                value="{{ old('vacancy', @$job->vacancy) }}">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="form--label required">@lang('Salary Period')</label>
+                        <label class="form--label ">@lang('Salary Period')</label>
                         <select class="form--control select2" name="salary_period"
                                 data-minimum-results-for-search="-1">
                             <option selected disabled>@lang('Select One')</option>
@@ -107,10 +107,10 @@
                 </div>
                 <div class="col-sm-6 salaryTypeParent">
                     <div class="form-group">
-                        <label class="form--label required">@lang('Salary Type')</label>
+                        <label class="form--label ">@lang('Salary Type')</label>
 
                         <select class="form--control select2" id="salary_type" name="salary_type"
-                                data-minimum-results-for-search="-1" required>
+                            data-minimum-results-for-search="-1" >
                             <option value="{{ Status::NEGOTIATION }}" @selected(old('salary_type', @$job->salary_type) == Status::NEGOTIATION)>
                                 @lang('Negotiable')
                             </option>

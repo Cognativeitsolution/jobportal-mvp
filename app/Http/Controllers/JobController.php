@@ -14,8 +14,10 @@ use App\Models\Type;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 
-class JobController extends Controller {
-    private function dataQuery($data, $query) {
+class JobController extends Controller
+{
+    private function dataQuery($data, $query)
+    {
         if (@$data['category_id']) {
             $query = $query->where('category_id', $data['category_id']);
         }
@@ -38,7 +40,8 @@ class JobController extends Controller {
         return $query;
     }
 
-    private function filterQuery($query) {
+    private function filterQuery($query)
+    {
         if (request('sort_by')) {
             $query = $query->orderBy('id', request('sort_by'));
         } else {
@@ -66,6 +69,18 @@ class JobController extends Controller {
         }
         if (request('city_id')) {
             $query = $query->where('city_id', request('city_id'));
+        } else {
+            $countryCode =  null;
+
+            if ($countryCode) {
+                $cityIds = Location::whereHas('country', function ($q) use ($countryCode) {
+                    $q->where('iso_code', $countryCode);
+                })->pluck('id')->toArray();
+
+                if (!empty($cityIds)) {
+                    $query = $query->whereIn('city_id', $cityIds);
+                }
+            }
         }
         if (request('category_id')) {
             $query = $query->whereIn('category_id', request('category_id'));
@@ -83,9 +98,11 @@ class JobController extends Controller {
         return $query;
     }
 
-    public function jobs() {
+    public function jobs()
+    {
         $query = Job::approved()->withCount('jobApplication')->whereHasActiveCategory()->whereHasActiveRole();
         $data  = session()->has('REQUEST_DATA') ? session()->get('REQUEST_DATA') : [];
+
         if ($data) {
             $query = $this->dataQuery($data, $query);
         }
@@ -108,10 +125,32 @@ class JobController extends Controller {
         $query = $query->with(['employer', 'location', 'city', 'favoriteItems' => function ($favoriteItems) {
             $favoriteItems->where('user_id', auth()->id());
         }]);
+        if (!request('city_id')) {
+
+            $countryCode =  null;
+
+            if ($countryCode) {
+                $cityIds = Location::whereHas('country', function ($q) use ($countryCode) {
+                    $q->where('iso_code', $countryCode);
+                })->pluck('id')->toArray();
+
+                if (!empty($cityIds)) {
+                    $query = $query->whereIn('city_id', $cityIds);
+                }
+            }
+        }
 
         $jobs      = clone $query;
         $totalJobs = clone $query;
         $totalJobs = $totalJobs->count();
+
+        //         array:3 [▼ // app\Http\Controllers\JobController.php:157
+        //   "city_id" => "3"
+        //   "keyword" => "AI Pro Resume"
+        //   "type_id" => "1"
+        // ]
+
+        $search = $data['keyword'] ?? request('keyword');
 
         if (($totalJobs <= getPaginate(18)) && request('page') > 1) {
             $request = request();
@@ -122,20 +161,22 @@ class JobController extends Controller {
             $jobs = $jobs->orderByDesc('id')->paginate(getPaginate(18));
         }
 
-        if (request('filter')) {
+        if (request(key: 'filter')) {
             $viewTemplate = request('view');
             $view         = view('Template::partials.frontend.' . $viewTemplate, compact('jobs'))->render();
             return response()->json([
                 'view'      => $view,
                 'totalJobs' => $totalJobs,
                 'page'      => @$page,
+                'search'    => $search,
             ]);
         } else {
-            return view('Template::job', compact('pageTitle', 'jobs', 'jobTypes', 'jobShifts', 'jobExperiences', 'categories', 'cities', 'minAge', 'maxAge', 'keywords', 'totalJobs', 'roles', 'url'));
+            return view('Template::job', compact('pageTitle', 'jobs', 'jobTypes', 'jobShifts', 'jobExperiences', 'categories', 'cities', 'minAge', 'maxAge', 'keywords', 'totalJobs', 'roles', 'url', 'search'));
         }
     }
 
-    public function featuredJobsList() {
+    public function featuredJobsList()
+    {
         $query = Job::approved()->featured()->whereHasActiveCategory()->withCount('jobApplication');
         if (request('filter')) {
             $query = $this->filterQuery($query);
@@ -183,7 +224,8 @@ class JobController extends Controller {
         }
     }
 
-    public function jobFilter(Request $request) {
+    public function jobFilter(Request $request)
+    {
         $data = [];
         if ($request->city_id) {
             $data['city_id'] = $request->city_id;
@@ -198,7 +240,8 @@ class JobController extends Controller {
         return to_route('job');
     }
 
-    public function jobCategory($id = 0) {
+    public function jobCategory($id = 0)
+    {
         $data = [];
         if ($id) {
             $data['category_id'] = $id;
@@ -207,21 +250,24 @@ class JobController extends Controller {
         return to_route('job');
     }
 
-    public function jobRole($id) {
+    public function jobRole($id)
+    {
         $data            = [];
         $data['role_id'] = $id;
         session()->put('REQUEST_DATA', $data);
         return to_route('job');
     }
 
-    public function jobKeyword($keyword) {
+    public function jobKeyword($keyword)
+    {
         $data            = [];
         $data['keyword'] = $keyword;
         session()->put('REQUEST_DATA', $data);
         return to_route('job');
     }
 
-    public function jobDetails($id) {
+    public function jobDetails($id)
+    {
         $pageTitle = "Job Detail";
         $user      = authUser();
         $job       = Job::approved()
@@ -256,7 +302,8 @@ class JobController extends Controller {
         return view('Template::job_details', compact('pageTitle', 'applied', 'job', 'relatedJobs'));
     }
 
-    public function categoryHotJobs($id = null) {
+    public function categoryHotJobs($id = null)
+    {
         $jobs = Job::active()->approved();
         if ($id) {
             $jobs = $jobs->where('category_id', $id);
@@ -271,7 +318,8 @@ class JobController extends Controller {
         return view('Template::partials.frontend.category_hot_jobs', compact('jobs', 'id'));
     }
 
-    public function featuredJobs($id = null) {
+    public function featuredJobs($id = null)
+    {
         $jobs = Job::featured()->approved();
         if ($id) {
             $jobs = $jobs->where('category_id', $id);

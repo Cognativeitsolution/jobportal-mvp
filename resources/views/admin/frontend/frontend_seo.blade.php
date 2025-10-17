@@ -17,15 +17,23 @@
                             <div class="col-xl-4">
                                 <div class="form-group">
                                     <label>@lang('SEO Image')</label>
-                                    <x-image-uploader class="w-100" :imagePath="frontendImage($key, @$data->seo_content->image, getFileSize('seo'), true)" :size="getFileSize('seo')" :required="false" />
+                                    <x-image-uploader class="w-100" :imagePath="frontendImage(
+                                        $key,
+                                        @$data->seo_content->image,
+                                        getFileSize('seo'),
+                                        true,
+                                    )" :size="getFileSize('seo')"
+                                        :required="false" />
                                 </div>
                             </div>
 
                             <div class="col-xl-8 mt-xl-0 mt-4">
                                 <div class="form-group select2-parent position-relative">
                                     <label>@lang('Meta Keywords')</label>
-                                    <small class="ms-2 mt-2  ">@lang('Separate multiple keywords by') <code>,</code>(@lang('comma')) @lang('or') <code>@lang('enter')</code> @lang('key')</small>
-                                    <select name="keywords[]" class="form-control select2-auto-tokenize" multiple="multiple">
+                                    <small class="ms-2 mt-2  ">@lang('Separate multiple keywords by') <code>,</code>(@lang('comma'))
+                                        @lang('or') <code>@lang('enter')</code> @lang('key')</small>
+                                    <select name="keywords[]" class="form-control select2-auto-tokenize"
+                                        multiple="multiple">
                                         @if (@$data->seo_content->keywords)
                                             @foreach (@$data->seo_content->keywords as $option)
                                                 <option value="{{ $option }}" selected>{{ __($option) }}</option>
@@ -34,16 +42,28 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label>@lang(' Title')</label>
+                                    <textarea name="title" rows="3" class="form-control">{{ @$data->seo_content->title }}</textarea>
+                                </div>
+                                <div class="form-group">
                                     <label>@lang('Meta Robots') <small>(@lang('optional'))</small></label>
-                                    <input type="text" class="form-control" name="meta_robots" value="{{ isset($data->seo_content->meta_robots) ? $data->seo_content->meta_robots : '' }}" placeholder="e.g. noindex, follow">
+                                    <input type="text" class="form-control" name="meta_robots"
+                                        value="{{ isset($data->seo_content->meta_robots) ? $data->seo_content->meta_robots : '' }}"
+                                        placeholder="e.g. noindex, follow">
+                                </div>
+                                <div class="form-group">
+                                    <label>@lang('Meta Title')</label>
+                                    <textarea name="meta_title" rows="3" class="form-control">{{ @$data->seo_content->meta_title }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>@lang('Meta Description')</label>
                                     <textarea name="description" rows="3" class="form-control">{{ @$data->seo_content->description }}</textarea>
                                 </div>
+
                                 <div class="form-group">
                                     <label>@lang('Social Title')</label>
-                                    <input type="text" class="form-control" name="social_title" value="{{ @$data->seo_content->social_title }}" />
+                                    <input type="text" class="form-control" name="social_title"
+                                        value="{{ @$data->seo_content->social_title }}" />
                                 </div>
                                 <div class="form-group">
                                     <label>@lang('Social Description')</label>

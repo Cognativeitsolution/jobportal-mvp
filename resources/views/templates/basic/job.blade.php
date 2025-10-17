@@ -7,6 +7,7 @@
     <div class="filter-section my-120">
         <div class="container">
             <div class="filter-main-wrapper">
+                {{-- @dd($query) --}}
                 @include('Template::partials.frontend.filter_card')
                 <div class="filter-body">
                     <div class="filter-header">
@@ -36,8 +37,9 @@
                                     <button class="nav-link listViewBtn active" id="pills-home-tab" data-bs-toggle="pill"
                                             data-bs-target="#pills-home" type="button" role="tab"
                                             aria-controls="pills-home" aria-selected="true">
-                                        @include('Template::partials.frontend.list_view_svg')
-                                    </button>
+
+
+                                        </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link gridViewBtn" id="pills-profile-tab" data-bs-toggle="pill"

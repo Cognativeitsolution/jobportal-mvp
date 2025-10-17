@@ -11,13 +11,16 @@ use App\Models\FavoriteItem;
 use App\Models\Frontend;
 use App\Models\Job;
 use App\Models\JobApply;
+use App\Rules\FileTypeValidate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class UserController extends Controller {
-    public function home() {
+class UserController extends Controller
+{
+    public function home()
+    {
         $pageTitle       = 'Dashboard';
         $user            = authUser();
         $blogs           = Frontend::where('data_keys', 'blog.element')->take(10)->orderByDesc('id')->get();
@@ -37,7 +40,8 @@ class UserController extends Controller {
         return view('Template::user.dashboard', compact('pageTitle', 'recommendedJobs', 'blogs', 'topCompanies'));
     }
 
-    public function show2faForm() {
+    public function show2faForm()
+    {
         $ga        = new GoogleAuthenticator();
         $user      = authUser();
         $secret    = $ga->createSecret();
@@ -46,7 +50,8 @@ class UserController extends Controller {
         return view('Template::user.twofactor', compact('pageTitle', 'secret', 'qrCodeUrl'));
     }
 
-    public function create2fa(Request $request) {
+    public function create2fa(Request $request)
+    {
         $user = authUser();
         $request->validate([
             'key'  => 'required',
@@ -65,7 +70,8 @@ class UserController extends Controller {
         }
     }
 
-    public function disable2fa(Request $request) {
+    public function disable2fa(Request $request)
+    {
         $request->validate([
             'code' => 'required',
         ]);
@@ -83,7 +89,8 @@ class UserController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function userData() {
+    public function userData()
+    {
         $user = authUser();
         if ($user->profile_complete == Status::YES) {
             return to_route('user.home');
@@ -95,7 +102,8 @@ class UserController extends Controller {
         return view('Template::user.user_data', compact('pageTitle', 'user', 'countries', 'mobileCode'));
     }
 
-    public function userDataSubmit(Request $request) {
+    public function userDataSubmit(Request $request)
+    {
         $user = authUser();
         if ($user->profile_complete == Status::YES) {
             return to_route('user.home');
@@ -135,7 +143,8 @@ class UserController extends Controller {
         return to_route('user.home');
     }
 
-    public function addDeviceToken(Request $request) {
+    public function addDeviceToken(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'token' => 'required',
         ]);
@@ -158,21 +167,24 @@ class UserController extends Controller {
         return ['success' => true, 'message' => 'Token saved successfully'];
     }
 
-    public function jobApplication() {
+    public function jobApplication()
+    {
         $pageTitle    = "Applications";
         $user         = authUser();
         $applications = JobApply::where('user_id', $user->id)->checkApprovedJob()->with('job', 'job.employer')->orderByDesc('id')->paginate(getPaginate());
         return view('Template::user.job.job_apply', compact('pageTitle', 'applications', 'user'));
     }
 
-    public function favoriteJobs() {
+    public function favoriteJobs()
+    {
         $pageTitle = "Favorite Jobs";
         $user      = authUser();
         $favorites = FavoriteItem::where('user_id', $user->id)->checkApprovedJob()->with('job')->orderByDesc('id')->paginate(getPaginate());
         return view('Template::user.job.favorite', compact('pageTitle', 'favorites', 'user'));
     }
 
-    public function applyJob(Request $request, $id) {
+    public function applyJob(Request $request, $id)
+    {
         $user = authUser();
         $job  = Job::where('status', Status::JOB_APPROVED)->where('id', $id)->firstOrFail();
 
@@ -203,24 +215,54 @@ class UserController extends Controller {
 
         $request->validate([
             'expected_salary' => 'required|integer|gt:0',
+            'resume'           => ['required', new FileTypeValidate(['pdf', 'doc', 'docx', 'rtf']), 'max:2048'],
+            'full_name'       => 'required|string|max:255',
+            'resume_options'  => 'required|string|max:255',
+            'email'           => 'required|email|max:255',
+            'phone'           => 'required|string|max:255',
+        ], [
+            'resume.max' => 'The resume must not exceed 2 MB.',
         ]);
 
-        if ($job->salary_type == Status::RANGE && $request->expected_salary > $job->salary_to) {
-            $notify[] = ['error', 'Expected salary must be less than or equal to job maximum salary'];
-            return back()->withNotify($notify);
+        // Salary range checks
+        // if ($job->salary_type == Status::RANGE) {
+        //     if ($request->expected_salary > $job->salary_to) {
+        //         $notify[] = ['error', 'Expected salary must be less than or equal to job maximum salary'];
+        //         return back()->withNotify($notify);
+        //     }
+
+        //     if ($request->expected_salary < $job->salary_from) {
+        //         $notify[] = ['error', 'Expected salary must be greater or equal to job minimum salary'];
+        //         return back()->withNotify($notify);
+        //     }
+        // }
+
+        // Handle resume upload
+        $resume = null;
+        if ($request->hasFile('resume')) {
+            $file = $request->file('resume');
+
+            // Get original filename (e.g. "my_cv.pdf")
+            $originalFileName = $request->resume->getClientOriginalName();
+            $file->move(getFilePath('resume'), $originalFileName);
+
+            // File path you can store in DB
+            $resume = $originalFileName;
         }
 
-        if ($job->salary_type == Status::RANGE && $request->expected_salary < $job->salary_from) {
-            $notify[] = ['error', 'Expected salary must be greater or equal to job minimum salary'];
-            return back()->withNotify($notify);
-        }
-
-        $jobApply                  = new JobApply();
+        // Save job application
+        $jobApply = new JobApply();
         $jobApply->job_id          = $id;
         $jobApply->user_id         = $user->id;
+        $jobApply->full_name       = $request->full_name;
+        $jobApply->email           = $request->email;
+        $jobApply->phone           = $request->phone;
+        $jobApply->resume          = $resume;
         $jobApply->expected_salary = $request->expected_salary;
+        $jobApply->status          = 0; // pending
         $jobApply->save();
 
+        // Notify employer (if needed)
         notify($job->employer, 'JOB_APPLICATION', [
             'title'           => @$job->title,
             'fullname'        => $user->fullname,
@@ -234,7 +276,8 @@ class UserController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function addToFavorite($id) {
+    public function addToFavorite($id)
+    {
         $job          = Job::approved()->findOrFail($id);
         $user         = authUser();
         $favoriteItem = FavoriteItem::where('user_id', $user->id)->where('job_id', $job->id)->first();
@@ -258,7 +301,8 @@ class UserController extends Controller {
         ]);
     }
 
-    public function favoriteJobDelete($id) {
+    public function favoriteJobDelete($id)
+    {
         $favoriteItem = FavoriteItem::where('user_id', auth()->id())->where('id', $id)->firstOrFail();
         $favoriteItem->delete();
 

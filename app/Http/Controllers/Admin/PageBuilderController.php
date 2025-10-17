@@ -8,14 +8,17 @@ use App\Models\Page;
 use App\Rules\FileTypeValidate;
 use Illuminate\Http\Request;
 
-class PageBuilderController extends Controller {
-    public function managePages() {
+class PageBuilderController extends Controller
+{
+    public function managePages()
+    {
         $pData     = Page::where('tempname', activeTemplate())->get();
         $pageTitle = 'Manage Pages';
         return view('admin.frontend.builder.pages', compact('pageTitle', 'pData'));
     }
 
-    public function managePagesSave(Request $request) {
+    public function managePagesSave(Request $request)
+    {
 
         $request->validate([
             'name' => 'required|min:3|string|max:40',
@@ -34,10 +37,10 @@ class PageBuilderController extends Controller {
         $page->save();
         $notify[] = ['success', 'New page added successfully'];
         return back()->withNotify($notify);
-
     }
 
-    public function managePagesUpdate(Request $request) {
+    public function managePagesUpdate(Request $request)
+    {
 
         $page = Page::where('id', $request->id)->firstOrFail();
         $request->validate([
@@ -59,10 +62,10 @@ class PageBuilderController extends Controller {
 
         $notify[] = ['success', 'Page updated successfully'];
         return back()->withNotify($notify);
-
     }
 
-    public function checkSlug($id = null) {
+    public function checkSlug($id = null)
+    {
         $page = Page::where('tempname', activeTemplate())->where('slug', request()->slug);
         if ($id) {
             $page = $page->where('id', '!=', $id);
@@ -73,21 +76,24 @@ class PageBuilderController extends Controller {
         ]);
     }
 
-    public function managePagesDelete($id) {
+    public function managePagesDelete($id)
+    {
         $page = Page::where('id', $id)->where('is_default', Status::NO)->firstOrFail();
         $page->delete();
         $notify[] = ['success', 'Page deleted successfully'];
         return back()->withNotify($notify);
     }
 
-    public function manageSection($id) {
+    public function manageSection($id)
+    {
         $pData     = Page::findOrFail($id);
         $pageTitle = 'Manage Section of ' . $pData->name;
         $sections  = getPageSections(true);
         return view('admin.frontend.builder.index', compact('pageTitle', 'pData', 'sections'));
     }
 
-    public function manageSectionUpdate($id, Request $request) {
+    public function manageSectionUpdate($id, Request $request)
+    {
         $request->validate([
             'secs' => 'nullable|array',
         ]);
@@ -103,13 +109,15 @@ class PageBuilderController extends Controller {
         return back()->withNotify($notify);
     }
 
-    public function manageSeo($id) {
+    public function manageSeo($id)
+    {
         $page      = Page::findOrFail($id);
         $pageTitle = 'SEO Configuration for ' . $page->name . ' Page';
         return view('admin.frontend.builder.seo', compact('pageTitle', 'page'));
     }
 
-    public function manageSeoStore(Request $request, $id) {
+    public function manageSeoStore(Request $request, $id)
+    {
         $request->validate([
             'image' => ['nullable', new FileTypeValidate(['jpeg', 'jpg', 'png'])],
         ]);
@@ -127,6 +135,8 @@ class PageBuilderController extends Controller {
         }
         $page->seo_content = [
             'image'              => $image,
+            'title'        => $request->title,
+            'meta_title'        => $request->meta_title,
             'description'        => $request->description,
             'social_title'       => $request->social_title,
             'social_description' => $request->social_description,

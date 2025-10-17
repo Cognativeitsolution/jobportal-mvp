@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{{ gs()->siteName(__($pageTitle)) }}</title>
+    <title>{{ @$seoContents->title ?? gs()->siteName(__($pageTitle)) }}</title>
 
     @include('partials.seo')
-<meta name="robots" content="noindex">
+    <meta name="robots" content="noindex">
     <link href="{{ asset('assets/global/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/global/css/all.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/global/css/line-awesome.min.css') }}" rel="stylesheet" />
@@ -80,21 +80,21 @@
     @stack('script')
 
     <script>
-        (function ($) {
+        (function($) {
             "use strict";
 
-            $('.policy').on('click', function () {
-                $.get('{{ route('cookie.accept') }}', function (response) {
+            $('.policy').on('click', function() {
+                $.get('{{ route('cookie.accept') }}', function(response) {
                     $('.cookies-card').addClass('d-none');
                 });
             });
 
-            setTimeout(function () {
+            setTimeout(function() {
                 $('.cookies-card').removeClass('hide')
             }, 2000);
 
             var inputElements = $('input,select');
-            $.each(inputElements, function (index, element) {
+            $.each(inputElements, function(index, element) {
                 if (element.id) {
                     return false;
                 }
@@ -104,7 +104,7 @@
             });
 
             var inputElements = $('[type=text],select,textarea');
-            $.each(inputElements, function (index, element) {
+            $.each(inputElements, function(index, element) {
                 if (element.id) {
                     return false;
                 }
@@ -113,7 +113,7 @@
                 element.attr('id', element.attr('name'))
             });
 
-            $.each($('input, select, textarea'), function (i, element) {
+            $.each($('input, select, textarea'), function(i, element) {
                 var elementType = $(element);
                 if (elementType.attr('type') != 'checkbox') {
                     if (element.hasAttribute('required')) {
@@ -122,7 +122,7 @@
                 }
             });
 
-            $.each($('input:not([type=checkbox]):not([type=hidden]), select, textarea'), function (i, element) {
+            $.each($('input:not([type=checkbox]):not([type=hidden]), select, textarea'), function(i, element) {
                 if (element.hasAttribute('required')) {
                     $(element).closest('.form-group').find('label').addClass('required');
                 }
@@ -138,7 +138,7 @@
             });
 
             let disableSubmission = false;
-            $('.disableSubmission').on('submit', function (e) {
+            $('.disableSubmission').on('submit', function(e) {
                 if (disableSubmission) {
                     e.preventDefault()
                 } else {
@@ -146,7 +146,7 @@
                 }
             });
 
-            $('.showFilterBtn').on('click', function () {
+            $('.showFilterBtn').on('click', function() {
                 $('.responsive-filter-card').slideToggle();
             });
         })(jQuery);

@@ -14,7 +14,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#search1"
-                            aria-expanded="true">
+                        aria-expanded="true">
                         @lang('Search')
                     </button>
                 </h2>
@@ -25,7 +25,7 @@
                                 <div class="filter-block__select">
                                     <div class="search-box">
                                         <input type="text" class="form--control" name="search"
-                                               placeholder="@lang('Search by job title')">
+                                            value="{{ $search ?? '' }}" placeholder="@lang('Search by job title')">
                                         <button type="submit" class="search-box__button">
                                             <i class="las la-search"></i>
                                         </button>
@@ -41,7 +41,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#location"
-                            aria-expanded="true">
+                        aria-expanded="true">
                         @lang('Location')
                     </button>
                 </h2>
@@ -65,7 +65,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#department" aria-expanded="true">
+                            data-bs-target="#department" aria-expanded="true">
                             @lang('Category')
                         </button>
                     </h2>
@@ -75,7 +75,7 @@
                                 <li class="filter-block__item">
                                     <div class="form--check">
                                         <input class="form-check-input" @checked(!@$requestData['category_id']) value=""
-                                               type="checkbox" id="category_all">
+                                            type="checkbox" id="category_all">
                                         <label class="form-check-label" for="category_all">
                                             <span class="label-text">@lang('All')</span>
                                         </label>
@@ -84,9 +84,9 @@
                                 @foreach ($categories as $category)
                                     <li class="filter-block__item">
                                         <div class="form--check">
-                                            <input class="form-check-input" name="category_id[]" value="{{ $category->id }}"
-                                                   type="checkbox" id="category{{ $category->id }}"
-                                                   @checked(@$requestData['category_id'] == $category->id)>
+                                            <input class="form-check-input" name="category_id[]"
+                                                value="{{ $category->id }}" type="checkbox"
+                                                id="category{{ $category->id }}" @checked(@$requestData['category_id'] == $category->id)>
                                             <label class="form-check-label" for="category{{ $category->id }}">
                                                 <span class="label-text">{{ __($category->name) }}</span>
                                                 <span class="label-text">({{ $category->job_count }})</span>
@@ -107,7 +107,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#role"
-                                aria-expanded="true">
+                            aria-expanded="true">
                             @lang('Role')
                         </button>
                     </h2>
@@ -117,7 +117,7 @@
                                 <li class="filter-block__item">
                                     <div class="form--check">
                                         <input class="form-check-input" @checked(!@$requestData['role_id']) value=""
-                                               type="checkbox" id="role_all">
+                                            type="checkbox" id="role_all">
                                         <label class="form-check-label" for="role_all">
                                             <span class="label-text">@lang('All')</span>
                                         </label>
@@ -126,9 +126,9 @@
                                 @foreach ($roles as $role)
                                     <li class="filter-block__item">
                                         <div class="form--check">
-                                            <input class="form-check-input" name="role_id[]" value="{{ $role->id }}"
-                                                   type="checkbox" id="role_{{ $role->id }}"
-                                                   @checked(@$requestData['role_id'] == $role->id)>
+                                            <input class="form-check-input" name="role_id[]"
+                                                value="{{ $role->id }}" type="checkbox"
+                                                id="role_{{ $role->id }}" @checked(@$requestData['role_id'] == $role->id)>
                                             <label class="form-check-label" for="role_{{ $role->id }}">
                                                 <span class="label-text">{{ __($role->name) }}</span>
                                                 <span class="label-text">({{ $role->jobs_count }})</span>
@@ -147,7 +147,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#Level" aria-expanded="true">
+                        data-bs-target="#Level" aria-expanded="true">
                         @lang('Work Mode')
                     </button>
                 </h2>
@@ -157,7 +157,7 @@
                             <li class="filter-block__item">
                                 <div class="form--check">
                                     <input class="form-check-input" type="checkbox" value="" checked
-                                           id="all_job_location_type">
+                                        id="all_job_location_type">
                                     <label class="form-check-label" for="all_job_location_type">
                                         <span class="label-text">@lang('All')</span>
                                     </label>
@@ -166,7 +166,7 @@
                             <li class="filter-block__item">
                                 <div class="form--check">
                                     <input class="form-check-input" name="job_location_type[]" type="checkbox"
-                                           value="{{ Status::ONSITE }}" id="on_site">
+                                        value="{{ Status::ONSITE }}" id="on_site">
                                     <label class="form-check-label" for="on_site">
                                         <span class="label-text">@lang('On-site')</span>
                                     </label>
@@ -175,7 +175,7 @@
                             <li class="filter-block__item">
                                 <div class="form--check">
                                     <input class="form-check-input" name="job_location_type[]" type="checkbox"
-                                           value="{{ Status::REMOTE }}" id="remote">
+                                        value="{{ Status::REMOTE }}" id="remote">
                                     <label class="form-check-label" for="remote">
                                         <span class="label-text">@lang('Hybrid')</span>
                                     </label>
@@ -184,7 +184,7 @@
                             <li class="filter-block__item">
                                 <div class="form--check">
                                     <input class="form-check-input" name="job_location_type[]" type="checkbox"
-                                           value="{{ Status::HYBRID }}" id="hybrid">
+                                        value="{{ Status::HYBRID }}" id="hybrid">
                                     <label class="form-check-label" for="hybrid">
                                         <span class="label-text">@lang('Remote')</span>
                                     </label>
@@ -193,7 +193,7 @@
                             <li class="filter-block__item">
                                 <div class="form--check">
                                     <input class="form-check-input" name="job_location_type[]" type="checkbox"
-                                           value="{{ Status::FIELD }}" id="field">
+                                        value="{{ Status::FIELD }}" id="field">
                                     <label class="form-check-label" for="field">
                                         <span class="label-text">@lang('Field')</span>
                                     </label>
@@ -208,7 +208,8 @@
             <div class="filter-block wow fadeInUp" data-wow-duration="2s">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#topic" aria-expanded="true">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#topic" aria-expanded="true">
                             @lang('Age Range')
                         </button>
                     </h2>
@@ -217,7 +218,8 @@
                             <div class=" custom--range">
                                 <div id="slider-range" class="custom--range__range"></div>
                                 <div class="custom--range__content d-flex flex-wrap justify-content-betwwen">
-                                    <input type="text" class="custom--range__prices" id="range_amount" name="age_range">
+                                    <input type="text" class="custom--range__prices" id="range_amount"
+                                        name="age_range">
                                 </div>
                             </div>
                         </div>
@@ -230,7 +232,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#job_type" aria-expanded="true">
+                            data-bs-target="#job_type" aria-expanded="true">
                             @lang('Job Type')
                         </button>
                     </h2>
@@ -239,8 +241,8 @@
                             <ul class="filter-block__list">
                                 <li class="filter-block__item">
                                     <div class="form--check">
-                                        <input class="form-check-input" type="checkbox" value="" id="all_job_type"
-                                               @checked(!@$requestData['type_id'])>
+                                        <input class="form-check-input" type="checkbox" value=""
+                                            id="all_job_type" @checked(!@$requestData['type_id'])>
                                         <label class="form-check-label" for="all_job_type">
                                             <span class="label-text">@lang('All')</span>
                                         </label>
@@ -250,8 +252,8 @@
                                     <li class="filter-block__item">
                                         <div class="form--check">
                                             <input class="form-check-input" type="checkbox" name="type_id[]"
-                                                   value="{{ $type->id }}" id="type_{{ $type->id }}"
-                                                   @checked(@$requestData['type_id'] == $type->id)>
+                                                value="{{ $type->id }}" id="type_{{ $type->id }}"
+                                                @checked(@$requestData['type_id'] == $type->id)>
                                             <label class="form-check-label" for="type_{{ $type->id }}">
                                                 <span class="label-text">{{ __($type->name) }}</span>
                                                 <span class="label-text">({{ $type->job_count }})</span>
@@ -271,7 +273,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#experience" aria-expanded="true">
+                            data-bs-target="#experience" aria-expanded="true">
                             @lang('Experience')
                         </button>
                     </h2>
@@ -281,7 +283,7 @@
                                 <li class="filter-block__item">
                                     <div class="form--check">
                                         <input class="form-check-input" type="checkbox" value=""
-                                               id="all_job_experience" checked>
+                                            id="all_job_experience" checked>
                                         <label class="form-check-label" for="all_job_experience">
                                             <span class="label-text">@lang('All')</span>
                                         </label>
@@ -290,11 +292,11 @@
                                 @foreach ($jobExperiences as $jobExperience)
                                     <li class="filter-block__item">
                                         <div class="form--check">
-                                            <input class="form-check-input" type="checkbox" name="job_experience_id[]"
-                                                   value="{{ $jobExperience->id }}"
-                                                   id="job_experience_{{ $jobExperience->id }}">
+                                            <input class="form-check-input" type="checkbox"
+                                                name="job_experience_id[]" value="{{ $jobExperience->id }}"
+                                                id="job_experience_{{ $jobExperience->id }}">
                                             <label class="form-check-label"
-                                                   for="job_experience_{{ $jobExperience->id }}">
+                                                for="job_experience_{{ $jobExperience->id }}">
                                                 <span class="label-text">{{ __($jobExperience->name) }}</span>
                                                 <span class="label-text">({{ $jobExperience->job_count }})</span>
                                             </label>
@@ -313,7 +315,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#shift" aria-expanded="true">
+                            data-bs-target="#shift" aria-expanded="true">
                             @lang('Shift')
                         </button>
                     </h2>
@@ -322,8 +324,8 @@
                             <ul class="filter-block__list">
                                 <li class="filter-block__item">
                                     <div class="form--check">
-                                        <input class="form-check-input" type="checkbox" value="" id="all_shift"
-                                               checked>
+                                        <input class="form-check-input" type="checkbox" value=""
+                                            id="all_shift" checked>
                                         <label class="form-check-label" for="all_shift">
                                             <span class="label-text">@lang('All')</span>
                                         </label>
@@ -333,7 +335,7 @@
                                     <li class="filter-block__item">
                                         <div class="form--check">
                                             <input class="form-check-input" type="checkbox" name="shift_id[]"
-                                                   value="{{ $jobShift->id }}" id="shift_{{ $jobShift->id }}">
+                                                value="{{ $jobShift->id }}" id="shift_{{ $jobShift->id }}">
                                             <label class="form-check-label" for="shift_{{ $jobShift->id }}">
                                                 <span class="label-text">{{ __($jobShift->name) }}</span>
                                                 <span class="label-text">({{ $jobShift->job_count }})</span>
@@ -352,7 +354,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#keywords" aria-expanded="true">
+                        data-bs-target="#keywords" aria-expanded="true">
                         @lang('Keywords')
                     </button>
                 </h2>
@@ -361,14 +363,23 @@
                         <ul class="filter-block__list">
                             <li class="filter-block__item">
                                 <span
-                                      class="feature-item__time allKeywordFilterBtn {{ !@$requestData['keyword'] ? 'active' : '' }}">
+                                    class="feature-item__time allKeywordFilterBtn {{ !@$requestData['keyword'] ? 'active' : '' }}">
                                     @lang('All')
                                 </span>
                             </li>
+
+                            @if (!empty(@$requestData['keyword']))
+                                <li class="filter-block__item">
+                                    <span class="feature-item__time keywordFilterBtn active">
+                                        {{ __(@$requestData['keyword']) }}
+                                    </span>
+                                </li>
+                            @endif
+
                             @foreach ($keywords as $keyword)
                                 <li class="filter-block__item">
                                     <span
-                                          class="feature-item__time keywordFilterBtn {{ strtolower(@$requestData['keyword']) == strtolower($keyword->keyword) ? 'active' : '' }}">
+                                        class="feature-item__time keywordFilterBtn {{ strtolower(@$requestData['keyword']) == strtolower($keyword->keyword) ? 'd-none' : '' }}">
                                         {{ __($keyword->keyword) }}
                                     </span>
                                 </li>

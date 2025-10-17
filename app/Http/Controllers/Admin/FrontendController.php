@@ -240,6 +240,8 @@ class FrontendController extends Controller
         }
         $data->seo_content = [
             'image'              => $image,
+            'title'              => $request->title,
+            'meta_title'         => $request->meta_title,
             'description'        => $request->description,
             'social_title'       => $request->social_title,
             'social_description' => $request->social_description,
